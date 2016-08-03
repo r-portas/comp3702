@@ -24,9 +24,15 @@ Things the agent can do
 ### Q1: Design an agent that plays and wins Tic Tac Toe
 
 Action Space (A): {0, 1, 2, 3, 4, 5, 6, 7, 8} (Position in Tic Tac Toe board)
+
 Percept Space: The current layout of the board at a given 'move'
+
 State Space (S): All possible Tic Tac Toe games
-World Dynamics (SXA -> S)
-Utility: +1 for goal state, 0 for all other states. Where a goal state is any possible move that could lead to success
+
+World Dynamics (SXA -> S) The change of the board from the other player
+
+Utility: +1 when the agent makes a straight line, -1 when the opponent makes a straight line. 0 for any other state.
+
 Initial state: Empty board
+
 Goal state: Any state where the agent wins
