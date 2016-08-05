@@ -63,3 +63,11 @@
 - It will generate the optimal solution (only in terms of steps)
 - The time complexity is O(b^d)
 - The space complexity is O(bd)
+
+### Uniform Cost Search
+- Expand fringe node with lowest cost from root
+- Use a Priority Queue to store fringe nodes
+- It is complete as long as the the branching factor is finite and all edges have a cost
+- It is optimal if all edges have a positive cost
+- The time and space complexity is O(b^(1 + floor(c\*/e))) where c* is the cost of the optimal solution and e is the minimum cost of the step
+- 
