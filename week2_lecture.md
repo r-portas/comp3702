@@ -68,6 +68,44 @@
 - Expand fringe node with lowest cost from root
 - Use a Priority Queue to store fringe nodes
 - It is complete as long as the the branching factor is finite and all edges have a cost
-- It is optimal if all edges have a positive cost
+- It is optimal in terms of cost if all edges have a positive cost
 - The time and space complexity is O(b^(1 + floor(c\*/e))) where c* is the cost of the optimal solution and e is the minimum cost of the step
-- 
+
+## Informed Search
+Informed Search: Select which node to expand based on a function of the estimated cost from the current node to the goal state
+
+Cost: f(n) = g(n) + h(n), where g(n) is the cost from root to node n and h(n) is the estimated cost from n to goal (usually based on heuristics)
+
+The node is selected based on f(n) and f(n) must contain h(n)
+
+### Blind vs Informed Search
+- Bias the search towards the goal
+- In general, informed searches are faster but highly depends on the heuristics used
+
+### Greedy Best First Search
+- Expand fringe node with lowest estimated cost from the current node to the goal
+- f(n) = h(n), g(n) is ignored
+- Expand node with the lowest f(n)
+- Almost the same as Uniform Cost Search
+- Use priority queue (PQ) to keep fringe nodes
+  - The highest priority in PQ is the node with the smallest estimated cost (using the heuristic function)
+- Is is not complete (based on heuristic)
+- Is will not generate the optimal solution (based on heuristic)
+- The Time and Space complexity depends on the heuristic, worst case is O(b^m)
+
+### A* Search
+- Expand fringe node with lowest estimated cost from root to goal via the node
+- g(n): Cost from root to node n
+- h(n): Estimated cost from node n to goal
+- f(n) = g(n) + h(n)
+- Expand fringe node with lowest f(n)
+- Use priority queue to store fringe nodes
+  - Highest priority is the node with the lowest f value, where f = h(x) + g(x)
+- It is complete, as long as every edge has a minimum cost
+- It is optimal as long as every edge has a minimum cost and the heuristic is admissible
+- Complexity is heavily influenced by the heuristic
+
+### Admissible Heurisitics
+- Should never overestimate the cost
+- The heuristic needs to be less than or equal to the true cost to reach the goal
+  
