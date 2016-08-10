@@ -1,9 +1,16 @@
 /**
  * A class that represents the environment
+ *
+ * IMPLEMENTATION NOTE:
+ *  This was created using a two dimensional hashmap, allow O(1) lookup from a given (i, j) tuple
+ *  Additionally since the algorithm only insert non-0 edges, getting the keys for the outer hashmap 
+ *  will return a list containing ONLY valid paths, meaning lookup is very fast
+ *
  * @author Roy Portas
  */
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.lang.String;
 
@@ -21,7 +28,7 @@ public class EnvironmentMap {
 
             String[] items = row.split(" ");
             for (int j = 0; j < items.length; j++) {
-                addToMap(i, j, Float.valueOf(items[j]));
+                addToMap(i + 1, j + 1, Float.valueOf(items[j]));
             }
         }
 
@@ -35,17 +42,22 @@ public class EnvironmentMap {
 
         HashMap<Integer, Float> temp;
 
-        // Check if the key exists
-        if (costMap.containsKey(i)) {
-            // Get the inner hashmap and put the value into it
-            temp = costMap.get(i);
-            temp.put(j, cost);
-        } else {
-            // It doesn't exist, so create it
-            temp = new HashMap<Integer, Float>();
-            temp.put(j, cost);
+        if (cost != 0) {
 
-            costMap.put(i, temp);
+            // Only add it if there is a valid route between the two points
+
+            // Check if the key exists
+            if (costMap.containsKey(i)) {
+                // Get the inner hashmap and put the value into it
+                temp = costMap.get(i);
+                temp.put(j, cost);
+            } else {
+                // It doesn't exist, so create it
+                temp = new HashMap<Integer, Float>();
+                temp.put(j, cost);
+
+                costMap.put(i, temp);
+            }
         }
     }
 
@@ -58,5 +70,18 @@ public class EnvironmentMap {
         }
 
         return 0;
+    }
+
+    /**
+     * Gets the connected entries
+     */
+    public List<Integer> getConnected(int i) {
+        List arr;
+        if (costMap.containsKey(i)) {
+            arr = new ArrayList<Integer>(costMap.get(i).keySet());
+        } else {
+            arr = new ArrayList<Integer>();
+        }
+        return arr;
     }
 }

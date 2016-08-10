@@ -16,7 +16,7 @@ public class Main {
     static String outputFilename;
     static List<String> data;
 
-    static EnvironmentMap envMap;
+    static NavigationAgent navAgent;
 
     public static void main(String[] args) {
 
@@ -33,7 +33,10 @@ public class Main {
                 int dimension = Integer.parseInt(data.get(0));
                 data.remove(0);
 
-                envMap = new EnvironmentMap(dimension, data);
+                EnvironmentMap envMap = new EnvironmentMap(dimension, data);
+                System.out.println(envMap);
+                navAgent = new NavigationAgent(envMap);
+                System.out.println(navAgent.runSearch("A*", 1, 8));
                 
             } catch (IOException e) {
                 System.out.println("Could not read file: IOException");
