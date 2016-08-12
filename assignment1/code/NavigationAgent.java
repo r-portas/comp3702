@@ -80,7 +80,6 @@ public class NavigationAgent {
             temp = queue.poll();
             expanded.add(temp.pos);
 
-            System.out.println(temp.pos);
 
             if (temp.pos == end) {
                 // Returns the path

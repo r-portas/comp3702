@@ -3,13 +3,48 @@
 \date{\today}
 
 \documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    margin=1in
+}
 
 \begin{document}
     \maketitle
 
     \section{Formal Definition of a Navigation Agent}
+    The navigation agent in this assignment is designed to output the shorted route between two points.\\
+    The navigation agent achieves this by gathering information about the environment, which in this case is the adjacency matrix))\\
+    The navigation agents uses this data of the environment to find the shortest route\\
+    \\
+    The navigation agent can be divided into three sections:\\
+    \begin{enumerate}
+        \item Action space\\
+            The set of all actions the agent can do, which in this cause is all possible paths between every point
+
+        \item Percept space\\
+            The set of all things the agent can perceive in the world, which in this case is all the points and the costs between every point
+
+        \item State space\\
+            The internal state of the world and the agent
+    \end{enumerate}
+
+    The navigation agent will use the above the select an action it believes will minimize the cost between two points.
+
     \section{Characteristics of Navigation Agent}
+
+    The navigation agent will be discrete, because the points and paths between them are  finite.\\
+    \\
+    The agent is deterministic, because the agent knows exactly what state it will be in after moving along a path\\
+    \\
+    The agent is fully observable, because the agent knows the entire state of the world at any time. Additionally there are no external factors that could change the state\\
+    \\
+    The agent is static, because the world does not change while the agent is determining the  shortest path.
+
     \section{A* Search Heuristic}
+
+    
+
     \section{Comparision of Uniform Cost and A*}
     \section{Algorithm scaling with input size}
 \end{document}
