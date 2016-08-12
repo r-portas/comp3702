@@ -25,3 +25,4 @@ A consistent heuristic must also be admissable.
 - Information about the problem
 - Knowledge about the sub problems
 - Learn from prior results of solving the same or similar problems
+
