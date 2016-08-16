@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.lang.StringBuffer;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NavigationAgent {
 
@@ -68,7 +69,8 @@ public class NavigationAgent {
         Comparator<Node> comp = new NodeComparator();
         PriorityQueue<Node> queue = new PriorityQueue<Node>(10, comp);
         ArrayList<Integer> expanded = new ArrayList<Integer>();
-       
+        HashMap<Integer, Float> heuristic = envMap.generateHeuristic();
+
         // First create the start node
         Node temp = new Node(start, 0);
         queue.add(temp);
@@ -91,7 +93,14 @@ public class NavigationAgent {
             for (Integer dest : connected) {
                 // Create a new node
                 if (!expanded.contains(dest)) {
-                    Node child = new Node(dest, envMap.getEdgeCost(temp.pos, dest) + temp.cost);
+                    // Add the heuristic
+                    Float h = heuristic.get(dest);
+
+                    if (h == null) {
+                        h = new Float(0);
+                    }
+
+                    Node child = new Node(dest, envMap.getEdgeCost(temp.pos, dest) + temp.cost + h);
                     child.parent = temp;
                     queue.add(child);
                 }

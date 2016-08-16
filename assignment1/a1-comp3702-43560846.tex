@@ -43,8 +43,19 @@
 
     \section{A* Search Heuristic}
 
-    
+    Choose the heuristic of the node to be the maximum cost of the distances to it's children.\\
+    \\
+    If this heuristic is applied to every node, it should allow the algorithm to choose the next node in such a way that it's children are easy to reach. Since we want the heuristic to be admissible, it must never overestimate. Since in this case we choose the maximum distance, thus the heuristic will always underestimate the cost of the children nodes.
 
     \section{Comparision of Uniform Cost and A*}
+
+    Uniform cost search involves a few steps:
+    \begin{itemize}
+        \item Dequeue the maximum priority element from the queue
+        \item If the path is ending in the goal state, write the path to the file and exit
+        \item Expand the nodes and insert the children into the priority queue, each child's cost is the cost up to the child plus the child cost itself
+    \end{itemize}
+    The uniform cost search does not use any heuristics. Additionally, UC is complete as long as the branching factor is finite and all edges have a valid cost. Furthermore, it will generate an optimal solution if all edges have a positive cost. However since UC is a blind search algorithm, it does not estimate the cost from the current node to the goal.
+
     \section{Algorithm scaling with input size}
 \end{document}

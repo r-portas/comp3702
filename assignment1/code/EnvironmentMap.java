@@ -84,4 +84,29 @@ public class EnvironmentMap {
         }
         return arr;
     }
+
+    /**
+     * Generates the heuristic by finding the max cost to all children of a single node
+     */
+    public HashMap<Integer, Float> generateHeuristic() {
+        HashMap<Integer, Float> heuristic = new HashMap<Integer, Float>();
+
+        List<Integer> keys = new ArrayList<Integer>(costMap.keySet());
+        for (Integer key : keys) {
+            
+            float max = 0;
+            List<Integer> children = getConnected(key);
+            for (Integer child : children) {
+                float temp = getEdgeCost(key, child);
+                if (temp > max) {
+                    max = temp;
+                }
+            }
+
+            heuristic.put(key, max);
+
+        }
+
+        return heuristic;
+    }
 }
