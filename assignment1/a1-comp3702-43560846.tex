@@ -45,7 +45,9 @@
 
     Choose the heuristic of the node to be the maximum cost of the distances to it's children.\\
     \\
-    If this heuristic is applied to every node, it should allow the algorithm to choose the next node in such a way that it's children are easy to reach. Since we want the heuristic to be admissible, it must never overestimate. Since in this case we choose the maximum distance, thus the heuristic will always underestimate the cost of the children nodes.
+    If this heuristic is applied to every node, it should allow the algorithm to choose the next node in such a way that it's children are easy to reach. Since we want the heuristic to be admissible, it must never overestimate. Since in this case we choose the maximum distance, thus the heuristic will always underestimate the cost of the children nodes.\\
+    \\
+    With the heuristic in place, the algorithm then can choose the next node based on the cost to the node and the maximum cost of the children of the child nodes. By choosing the minimum 'maximum' distance of the childs' children nodes, allows the algorithm to reduce the cost in the long run. Since when it moves to the next node, it will have the shortest average child distances compared to other nodes.
 
     \section{Comparision of Uniform Cost and A*}
 
@@ -58,4 +60,9 @@
     The uniform cost search does not use any heuristics. Additionally, UC is complete as long as the branching factor is finite and all edges have a valid cost. Furthermore, it will generate an optimal solution if all edges have a positive cost. However since UC is a blind search algorithm, it does not estimate the cost from the current node to the goal.
 
     \section{Algorithm scaling with input size}
+
+    The Uniform Cost search algorithm has a space and time complexity of $$O(branch\ factor^{1 + floor(\frac{cost\ of\ optimal\ solution}{min\ step\ cost}})$$
+
+    However the A* search, with heuristic, will be much slower. This is because the heuristic visits every node, and all children to each node. The worse case scenario would be when all nodes are connected to each other, resulting in a heuristic time complexity of $O(n^2)$. However it is worth noting that for a given environment, the heuristic only needs to be calculated one. Meaning after the first distance calculation the algorithm will have a space and time complexity equal to the Uniform Cost search.
+
 \end{document}
