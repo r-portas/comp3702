@@ -101,11 +101,55 @@ public class NavigationAgent {
             // We don't add the old one back, since its not exactly required
             
         }
+        
+    }
+
+    private String runUCSearch(int start, int end) {
+        Comparator<Node> comp = new NodeComparator();
+        PriorityQueue<Node> queue = new PriorityQueue<Node>(10, comp);
+        ArrayList<Integer> expanded = new ArrayList<Integer>();
+       
+        // First create the start node
+        Node temp = new Node(start, 0);
+        queue.add(temp);
+
+        while (true) {
+            if (queue.size() == 0) {
+                return "No matches found";
+            }
+            temp = queue.poll();
+            expanded.add(temp.pos);
+
+            System.out.println(temp.pos);
+
+            if (temp.pos == end) {
+                // Returns the path
+                return getPath(temp);
+            }
+            List<Integer> connected = envMap.getConnected(temp.pos);
+
+            // Add the new nodes
+            for (Integer dest : connected) {
+                // Create a new node
+                if (!expanded.contains(dest)) {
+                    Node child = new Node(dest, envMap.getEdgeCost(temp.pos, dest) + temp.cost);
+                    child.parent = temp;
+                    queue.add(child);
+                }
+            }
+
+            // We don't add the old one back, since its not exactly required
+            
+        }
 
     }
 
 
     public String runSearch(String searchType, int start, int end) {
+        if (searchType.equals("Uniform")) {
+            return runUCSearch(start, end);
+        }
+
         if (searchType.equals("A*")) {
             return runAStarSearch(start, end);
         }

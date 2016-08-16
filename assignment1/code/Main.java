@@ -26,7 +26,7 @@ public class Main {
             queryFilename = args[1];
             outputFilename = args[2];
         
-            // Read in the text file
+            // Read in the map file
             try {
                 data = Files.readAllLines(Paths.get(envFilename));
                 
@@ -36,10 +36,26 @@ public class Main {
                 EnvironmentMap envMap = new EnvironmentMap(dimension, data);
                 System.out.println(envMap);
                 navAgent = new NavigationAgent(envMap);
-                System.out.println(navAgent.runSearch("A*", 1, 8));
+                //System.out.println(navAgent.runSearch("A*", 1, 8));
                 
             } catch (IOException e) {
-                System.out.println("Could not read file: IOException");
+                System.out.println("Could not read environment file");
+            }
+
+            // Read in the query file
+            try {
+                data = Files.readAllLines(Paths.get(queryFilename));
+                data.remove(0);
+
+                for (String line : data) {
+                    String[] lineData = line.split(" ");
+                    System.out.println(navAgent.runSearch(lineData[0],
+                                Integer.parseInt(lineData[1]),
+                                Integer.parseInt(lineData[2])));
+
+                }
+            } catch (IOException e) {
+                System.out.println("Could not read query file");
             }
 
         } else {
