@@ -43,11 +43,11 @@
 
     \section{A* Search Heuristic}
 
-    Choose the heuristic of the node to be the maximum cost of the distances to it's children.\\
+    Choose the heuristic of the node to be the minimum cost of the distances to it's children.\\
     \\
-    If this heuristic is applied to every node, it should allow the algorithm to choose the next node in such a way that it's children are easy to reach. Since we want the heuristic to be admissible, it must never overestimate. Since in this case we choose the maximum distance, thus the heuristic will always underestimate the cost of the children nodes.\\
+    If this heuristic is applied to every node, it should allow the algorithm to choose the next node in such a way that it's children are easy to reach. Since we want the heuristic to be admissible, it must never overestimate. If we choose the minimum cost of the children, the heuristic will always underestimate the cost of the children nodes.\\
     \\
-    With the heuristic in place, the algorithm then can choose the next node based on the cost to the node and the maximum cost of the children of the child nodes. By choosing the minimum 'maximum' distance of the childs' children nodes, allows the algorithm to reduce the cost in the long run. Since when it moves to the next node, it will have the shortest average child distances compared to other nodes.
+    With the heuristic in place, the algorithm then can choose the next node based on the cost to the node and the minimum cost of the children of the child nodes. By choosing the minimum distance of the children nodes, it allows the algorithm to reduce the cost in the long run. Since when it moves to the next node, it will have the shortest distance to it's children compared to the other nodes.
 
     \section{Comparision of Uniform Cost and A*}
 

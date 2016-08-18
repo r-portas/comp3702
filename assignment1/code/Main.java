@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.io.IOException;
 
 public class Main {
@@ -15,6 +16,9 @@ public class Main {
     static String queryFilename;
     static String outputFilename;
     static List<String> data;
+
+    static private long startTime;
+    static private double endTime;
 
     static NavigationAgent navAgent;
 
@@ -34,9 +38,7 @@ public class Main {
                 data.remove(0);
 
                 EnvironmentMap envMap = new EnvironmentMap(dimension, data);
-                System.out.println(envMap);
                 navAgent = new NavigationAgent(envMap);
-                //System.out.println(navAgent.runSearch("A*", 1, 8));
                 
             } catch (IOException e) {
                 System.out.println("Could not read environment file");
@@ -48,10 +50,32 @@ public class Main {
                 data.remove(0);
 
                 for (String line : data) {
+
+                    startTime = System.nanoTime();
+
                     String[] lineData = line.split(" ");
-                    System.out.println(navAgent.runSearch(lineData[0],
+                    String output = navAgent.runSearch(lineData[0],
                                 Integer.parseInt(lineData[1]),
-                                Integer.parseInt(lineData[2])));
+                                Integer.parseInt(lineData[2]));
+                    endTime = (double) System.nanoTime() - (double) startTime; 
+
+                    System.out.println(output + " Searched in " + endTime / 1000000 + "ms using " + lineData[0]);
+
+                    // Add a newline character
+                    output += "\n";
+
+                    // Create the file
+                    if (!Files.exists(Paths.get(outputFilename))) {
+                        Files.createFile(Paths.get(outputFilename)); 
+                    }
+                    
+                    try {
+                        Files.write(Paths.get(outputFilename), output.getBytes(), StandardOpenOption.APPEND);
+                    } catch (IOException e) {
+                        System.out.println("Could not write file");
+                        System.out.println(e.toString());
+                    }
+                
 
                 }
             } catch (IOException e) {

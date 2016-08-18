@@ -32,6 +32,7 @@ public class EnvironmentMap {
             }
         }
 
+        System.out.println("--- Environment Map ---");
         System.out.println(costMap);
     }
 
@@ -94,16 +95,16 @@ public class EnvironmentMap {
         List<Integer> keys = new ArrayList<Integer>(costMap.keySet());
         for (Integer key : keys) {
             
-            float max = 0;
+            float min = 1000;
             List<Integer> children = getConnected(key);
             for (Integer child : children) {
                 float temp = getEdgeCost(key, child);
-                if (temp > max) {
-                    max = temp;
+                if (temp < min) {
+                    min = temp;
                 }
             }
 
-            heuristic.put(key, max);
+            heuristic.put(key, min);
 
         }
 

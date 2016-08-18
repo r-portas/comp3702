@@ -62,7 +62,7 @@ public class NavigationAgent {
             parent = parent.parent;
         }
 
-        return new StringBuffer(result).reverse().toString() + "  (" + n.cost + ")";
+        return new StringBuffer(result).reverse().toString();
     }
 
     private String runAStarSearch(int start, int end) {
