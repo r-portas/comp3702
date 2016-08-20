@@ -33,7 +33,7 @@ public class EnvironmentMap {
         }
 
         System.out.println("--- Environment Map ---");
-        System.out.println(costMap);
+        System.out.println(costMap.get(6));
     }
 
     /**

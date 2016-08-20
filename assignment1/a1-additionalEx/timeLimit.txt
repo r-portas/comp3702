@@ -1,0 +1,3 @@
+100-a: A*: 40ms, Uniform Cost: 150ms
+100-b: A*: 30ms, Uniform Cost: 40ms
+1000: A*: 550ms, Uniform Cost: 600ms

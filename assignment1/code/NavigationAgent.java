@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.lang.StringBuffer;
 import java.util.List;
+import java.util.Stack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +18,10 @@ public class NavigationAgent {
     private class Node {
         public int pos;
         public float cost;
+        
+        // Used for A*
+        public float actCost;
+
         public Node parent;
 
         public Node(int pos, float cost) {
@@ -33,9 +38,9 @@ public class NavigationAgent {
         @Override
         public int compare(Node x, Node y) {
             // Normally it is x - y, however we want to invert, to sort by lowest first
-            if (x.cost < y.cost) {
+            if (x.cost > y.cost) {
                 return 1;
-            } else if (x.cost > y.cost) {
+            } else if (x.cost < y.cost) {
                 return -1;
             } else {
                 return 0;
@@ -50,19 +55,33 @@ public class NavigationAgent {
 
     private String getPath(Node n) {
 
-        String result = "";
-        result += n.pos;
+        Stack<Integer> st = new Stack<Integer>();
+        float finalCost = n.cost;
 
-        Node parent = n.parent;
-        while (parent != null) {
+        while (n != null) {
+            st.push(n.pos);
             
-            result += "-";
-            result += parent.pos;
-
-            parent = parent.parent;
+            n = n.parent;
         }
 
-        return new StringBuffer(result).reverse().toString();
+        int depth = st.size();
+
+        String output = "";
+        while (!st.empty()) {
+            
+            output += st.pop();
+
+            if (!st.empty()) {
+                output += "-";
+            }
+        }
+
+        output += String.format(" cost %.2f", finalCost);
+        output += " at depth ";
+        output += depth - 1;
+
+        return output;
+        
     }
 
     private String runAStarSearch(int start, int end) {
@@ -73,6 +92,7 @@ public class NavigationAgent {
 
         // First create the start node
         Node temp = new Node(start, 0);
+        temp.actCost = 0;
         queue.add(temp);
 
         while (true) {
@@ -85,6 +105,9 @@ public class NavigationAgent {
 
             if (temp.pos == end) {
                 // Returns the path
+
+                // Set the actual cost
+                temp.cost = temp.actCost;
                 return getPath(temp);
             }
             List<Integer> connected = envMap.getConnected(temp.pos);
@@ -100,13 +123,15 @@ public class NavigationAgent {
                         h = new Float(0);
                     }
 
-                    Node child = new Node(dest, envMap.getEdgeCost(temp.pos, dest) + temp.cost + h);
+                    Node child = new Node(dest, envMap.getEdgeCost(temp.pos, dest) + temp.cost + h/10);
+                    child.actCost = envMap.getEdgeCost(temp.pos, dest) + temp.actCost;
                     child.parent = temp;
                     queue.add(child);
                 }
             }
 
             // We don't add the old one back, since its not exactly required
+            //System.out.println("Smallest item is " + queue.peek().pos + " [cost " + queue.peek().cost + "]");
             
         }
         
@@ -128,7 +153,7 @@ public class NavigationAgent {
             temp = queue.poll();
             expanded.add(temp.pos);
 
-            System.out.println(temp.pos);
+            //System.out.println(temp.pos);
 
             if (temp.pos == end) {
                 // Returns the path
@@ -145,6 +170,7 @@ public class NavigationAgent {
                     queue.add(child);
                 }
             }
+
 
             // We don't add the old one back, since its not exactly required
             

@@ -47,10 +47,10 @@ public class Main {
             // Read in the query file
             try {
                 data = Files.readAllLines(Paths.get(queryFilename));
-                data.remove(0);
+                int count = Integer.parseInt(data.remove(0));
 
-                for (String line : data) {
-
+                for (int i = 0; i < count; i++) {
+                    String line = data.get(i);
                     startTime = System.nanoTime();
 
                     String[] lineData = line.split(" ");
