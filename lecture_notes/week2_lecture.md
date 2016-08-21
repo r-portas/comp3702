@@ -104,6 +104,7 @@ The node is selected based on f(n) and f(n) must contain h(n)
 - It is complete, as long as every edge has a minimum cost
 - It is optimal as long as every edge has a minimum cost and the heuristic is admissible
 - Complexity is heavily influenced by the heuristic
+- Is similar to Breadth First Search but with weighted costs
 
 ### Admissible Heurisitics
 - Should never overestimate the cost
