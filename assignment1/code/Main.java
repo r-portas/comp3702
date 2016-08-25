@@ -83,7 +83,7 @@ public class Main {
             }
 
         } else {
-            System.out.println("Incorrect number of arguments");
+            System.out.println("params: () () ()");
         }
     }
 
