@@ -34,8 +34,43 @@
 
 - Entailment
   - Relation between sentences are based on relation between their intrepretations
+
 - Terminology
   - A sentence is valid: Its truth value is T for all possible interpretations
   - A sentence is satisfiable: Its truth value is T for at least one of the possible intrepretations
   - A sentence is unsatisfiable: Its truth value is F for all possible intrepretations
   - For propositional logic, we can always decide if a sentence is valid/satisfiabled/unsatifiable in finite time (decidable)
+
+## How logic is used in AI
+
+- Formulate information as propositional sentences
+  - Create a knowledge base (KB)
+  - KB: Set of sentences, such that KB is false in models that contradict what the agent knows
+
+## Types of Problems
+
+### Validity
+- Is the sentence valid?
+  - The sentence is true under all interpretations
+
+- Model checking
+  - Sound: The result is correct
+  - Complete: It always gives an answer
+  - Complexity:
+    - Time: O(2^n)
+    - Space: O(n)
+    - n is the number of propositional variables
+
+- Theorem Proving: Natural deduction using search
+  - State space
+    - All possible set of sentences
+  - Action space
+    - All inference rules
+  - World dynamic
+    - Apply the inference rule to all sentences that match the above the line part of the inference rule. Become the sentence that lies below the line of the inference rule
+  - Initial state
+    - Initial knowledge base
+  - Goal state
+    - The state contains the sentence we are trying to prove
+   
+  This is sound but may not complete. It depends on whether we can provide a complete list of inference rules.
