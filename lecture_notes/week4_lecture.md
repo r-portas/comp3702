@@ -140,3 +140,14 @@ Suppose we have 2 line segments: p1q1 and p2q2. The line segments intersect when
 - In most free spaces of real world problems every configuration 'sees' a significant fraction of the free space
 - A relatively small number of vertices and edges are sufficient to cover most free spaces with high probablity and hence solve the given queries
 
+### Formal Definition
+- The lookout of a subset F1 of the free space is the set of all configurations in F1 from which it is possible to 'see' a significant fraction of the free space outside F1.
+    - Beta-lookup (F1): The set of all configurations in F1 from which it is possible to 'see' beta fraction of the free space outside F1
+- The free space F is expansive if all of its subsets have a large lookout
+- If we know alpha and beta of the free space, we can compute the number of samples to solve a given problem with high probability.
+- But, to compute alpha and beta, we need the geometry of the free space
+    - PRM is successful exactly because its not computing the geometry of the free space
+    - Practically, we don't know alpha and beta, nor the exact number of samples to use
+- Why bother?
+    - Sometimes we can 'guess' alpha and beta from the workspace, thus know when to use PRM and when not
+    - Guarantees that we will eventually get a solution if a solution exists
