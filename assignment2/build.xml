@@ -12,12 +12,29 @@
         <javac srcdir="${src}" destdir="${build}" />
     </target>
 
+    <target name="runVisual" depends="visual">
+        <java jar="dist/lib/visual.jar" fork="true">
+        </java>
+    </target>
+
+    <!-- Build the visual program -->
+    <target name="visual" depends="compile">
+        <mkdir dir="${dist}/lib" />
+
+        <jar jarfile="${dist}/lib/visual.jar" basedir="${build}">
+            <manifest>
+                <attribute name="Main-Class" value="visualiser.Visualiser" />
+            </manifest>
+        </jar>
+    </target>
+
+    <!-- Build the main program -->
     <target name="dist" depends="compile">
         <mkdir dir="${dist}/lib" />
 
         <jar jarfile="${dist}/lib/a2-comp3702-43560846.jar" basedir="${build}" >
             <manifest>
-                <attribute name="Main-Class" value="HelloWorld" />
+                <attribute name="Main-Class" value="Main" />
             </manifest>
         </jar>
     </target>
