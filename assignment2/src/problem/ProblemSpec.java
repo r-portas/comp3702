@@ -244,6 +244,12 @@ public class ProblemSpec {
     }
 
 
+    /**
+     * Checks for a collision with obstacles
+     * @author Roy Portas
+     */
+    public boolean checkCollision() {
+    }
 
     /**
      * Sets the path.

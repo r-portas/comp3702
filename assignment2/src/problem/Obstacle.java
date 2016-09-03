@@ -59,6 +59,14 @@ public class Obstacle {
     }
 
     /**
+     * Checks if the obstacle is causing a collision
+     * @author Roy Portas
+     */
+    public boolean checkCollision(double x, double y) {
+        return rect.contains(x, y);
+    }
+
+    /**
      * Returns a String representation of this obstacle.
      * 
      * @return a String representation of this obstacle.
