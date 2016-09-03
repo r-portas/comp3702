@@ -3,6 +3,7 @@ package problem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import visualiser.VisualisationPanel;
 
 /**
  * Samples a given configuration
@@ -12,7 +13,7 @@ import java.util.Random;
 public class Sampler {
 
     private ProblemSpec ps;
-
+    
     private double width;
     private double height;
     private Random rand;
@@ -85,6 +86,24 @@ public class Sampler {
         sampleList = new ArrayList<double[]>();
     }
 
+    public void sampleCustomMethod(int samples) {
+        int complete = 0;
+        sampleList = new ArrayList<double[]>();
+
+        while (complete < samples) {
+            double[] q1 = sampleRandomPoint();
+
+            if (ps.checkCollision(q1[0], q1[1]) == false) {
+                // q1 is colliding
+                sampleList.add(q1);
+                complete += 1;
+                System.out.println("Position (" + q1[0] + ", " + q1[1] + ")");
+            }
+                
+        }
+
+    }
+
     public void sampleNearObstacles(int samples) {
         int complete = 0;
         sampleList = new ArrayList<double[]>();
@@ -108,6 +127,7 @@ public class Sampler {
 
                     System.out.println("Position (" + q1[0] + ", " + q1[1] + ")");
                 }
+
             }
 
         }

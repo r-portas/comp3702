@@ -50,7 +50,7 @@ public class Visualiser {
 
     private JMenuBar menuBar;
     private JMenu fileMenu;
-    private JMenuItem loadProblemItem, loadSolutionItem, exitItem, sampleItem; // assumeDirectSolutionItem
+    private JMenuItem loadProblemItem, loadSolutionItem, exitItem, sampleItem, customSampleItem; // assumeDirectSolutionItem
     private JMenu animationMenu;
     private JMenuItem initialiseItem, playPauseItem, stopItem;
     private JMenu displayMenu;
@@ -120,9 +120,11 @@ public class Visualiser {
                 playPause();
             } else if (cmd.equals("Stop")) {
                 setAnimating(false);
-            } else if (cmd.equals("Sample workspace")) {
-                infoLabel.setText("Sampling workspace...");
-                vp.runSample();
+            } else if (cmd.equals("Sample nearby")) {
+                vp.runNearbySample();
+                vp.repaint();
+            } else if (cmd.equals("Sample custom")) {
+                vp.runCustomSample();
                 vp.repaint();
             }
         }
@@ -292,9 +294,13 @@ public class Visualiser {
         loadSolutionItem.setEnabled(false);
         fileMenu.add(loadSolutionItem);
 
-        sampleItem = new JMenuItem("Sample workspace");
+        sampleItem = new JMenuItem("Sample nearby");
         sampleItem.addActionListener(menuListener);
         fileMenu.add(sampleItem);
+
+        customSampleItem = new JMenuItem("Sample custom");
+        customSampleItem.addActionListener(menuListener);
+        fileMenu.add(customSampleItem);
 
         fileMenu.addSeparator();
         exitItem = new JMenuItem("Exit");

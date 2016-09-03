@@ -58,8 +58,12 @@ public class VisualisationPanel extends JComponent {
         return displayingSolution;
     }
 
-    public void runSample() {
-        sampler.sampleNearObstacles(1000);
+    public void runNearbySample() {
+        sampler.sampleNearObstacles(20000);
+    }
+
+    public void runCustomSample() {
+        sampler.sampleCustomMethod(80000);
     }
 
     public void setFramerate(int framerate) {
