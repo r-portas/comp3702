@@ -248,7 +248,14 @@ public class ProblemSpec {
      * Checks for a collision with obstacles
      * @author Roy Portas
      */
-    public boolean checkCollision() {
+    public boolean checkCollision(double x, double y) {
+        for (Obstacle o : obstacles) {
+            if (o.checkCollision(x, y)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

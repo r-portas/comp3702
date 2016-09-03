@@ -14,10 +14,11 @@
 
     \section{Chosen Configuration Space}
 
-    The smallest size of each chair movement is 0.001 units. The overall area is 1 units squared. Thus if we choose the configuration space to be 0.001 increments, this will yield a 1000 by 1000 grid. 
+    The maximum size of each chair movement is 0.001 units. The overall area is 1 unit squared. Thus if we choose the configuration space to be 0.001 increments, this will yield a 1000 by 1000 grid. 
     
     The area of this grid is 1000000, which should be viable for algorithm to use. Furthermore, choosing a smaller increment would not improve the accuracy, as the chair cannot move any finer than 0.001.
-
+    
+    However generating a grid of 1000000 items will likely take time and a lot of the workspace will be empty (not containing an obstacle). With that in mind, instead of generating a complete grid a sampling strategy should be used to focus on the points near obstacles.
 
 
     \section{Sampling Strategy}
