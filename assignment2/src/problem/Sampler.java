@@ -61,11 +61,6 @@ public class Sampler {
         return createPoint(x, y);
     }
 
-    public static enum Strategy {
-        NEAR_OBSTACLES,
-        INSIDE_PASSAGE
-    }
-
     public Sampler(double width, double height, ProblemSpec ps) {
         this.width = width;
         this.height = height;
@@ -130,18 +125,6 @@ public class Sampler {
 
             }
 
-        }
-    }
-
-    public void sampleWorkspace(int samples, Strategy strat) {
-        switch (strat) {
-            case NEAR_OBSTACLES:
-
-                  break;
-
-            case INSIDE_PASSAGE:
-
-                  break;
         }
     }
 

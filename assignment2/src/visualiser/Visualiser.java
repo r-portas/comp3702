@@ -122,10 +122,8 @@ public class Visualiser {
                 setAnimating(false);
             } else if (cmd.equals("Sample nearby")) {
                 vp.runNearbySample();
-                vp.repaint();
             } else if (cmd.equals("Sample custom")) {
                 vp.runCustomSample();
-                vp.repaint();
             }
         }
     }

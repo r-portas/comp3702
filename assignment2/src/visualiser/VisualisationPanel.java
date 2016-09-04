@@ -18,14 +18,14 @@ import javax.swing.Timer;
 import problem.Obstacle;
 import problem.ProblemSpec;
 import problem.ArmConfig;
-import problem.Sampler;
+import problem.Solver;
 
 public class VisualisationPanel extends JComponent {
     /** UID, as required by Swing */
     private static final long serialVersionUID = -4286532773714402501L;
 
     private ProblemSpec problemSetup = new ProblemSpec();
-    private Sampler sampler = new Sampler(problemSetup);
+    private Solver solver = new Solver();
     private Visualiser visualiser;
 
     private AffineTransform translation = AffineTransform.getTranslateInstance(
@@ -47,6 +47,9 @@ public class VisualisationPanel extends JComponent {
         this.setBackground(Color.WHITE);
         this.setOpaque(true);
         this.visualiser = visualiser;
+
+        // Load the problem spec
+        solver.loadProblemSpec(problemSetup);
     }
 
     public void setDisplayingSolution(boolean displayingSolution) {
@@ -59,11 +62,13 @@ public class VisualisationPanel extends JComponent {
     }
 
     public void runNearbySample() {
-        sampler.sampleNearObstacles(20000);
+        solver.sampleNearObstacles(20000);
+        this.repaint();
     }
 
     public void runCustomSample() {
-        sampler.sampleCustomMethod(80000);
+        solver.sampleCustom(50000);
+        this.repaint();
     }
 
     public void setFramerate(int framerate) {
@@ -240,9 +245,9 @@ public class VisualisationPanel extends JComponent {
         }
 
         // draw the samples
-        for (double[] item : sampler.getSampleList()) {
+        for (double[] item : solver.getSampleList()) {
             Shape circle = new Ellipse2D.Double(item[0] * getWidth() - 2.5, item[1] * getHeight() - 2.5, 5, 5);
-            g2.setColor(Color.BLACK);
+            g2.setColor(Color.LIGHT_GRAY);
             g2.fill(circle);
         }
 
