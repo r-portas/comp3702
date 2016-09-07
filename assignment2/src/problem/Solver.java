@@ -18,7 +18,7 @@ public class Solver {
     private EnvironmentMap envMap;
 
     public Solver() {
-        //envMap = new EnvironmentMap();
+        envMap = new EnvironmentMap();
     }
 
     /**
@@ -32,9 +32,9 @@ public class Solver {
     }
 
     public void sampleCustom(int samples) {
-        sampler.sampleCustomMethod(samples);
+        sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
 
-        envMap.generateMap(getSampleList());
+        envMap.generateMap(sampler.getConfigList());
     }
 
     public void sampleNearObstacles(int samples) {

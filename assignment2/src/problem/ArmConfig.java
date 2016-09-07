@@ -356,6 +356,9 @@ public class ArmConfig {
     }
 
     private void generateChair() {
+
+        System.out.println(gripperLengths);
+
         chair = new ArrayList<Line2D>();
         double x1 = base.getX();
         double y1 = base.getY();

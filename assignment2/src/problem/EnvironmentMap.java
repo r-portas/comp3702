@@ -2,36 +2,29 @@ package problem;
 
 import java.util.*;
 import java.awt.geom.Point2D;
+import tester.Tester;
 
 public class EnvironmentMap {
-    private HashMap<GraphNode, HashSet<GraphNode>> edges;
+    private HashMap<ArmConfig, HashSet<ArmConfig>> edges;
+    private Tester tester;
 
     public EnvironmentMap() {
-        edges = new HashMap<GraphNode, HashSet<GraphNode>>();
+        edges = new HashMap<ArmConfig, HashSet<ArmConfig>>();
+        tester = new Tester();
     }
 
     /**
      * Takes in the samples from the Sampler class
      */
-    public void generateMap(ArrayList<Point2D> samples) {
+    public void generateMap(ArrayList<ArmConfig> samples) {
 
         // Clear the old edgemap
-        edges = new HashMap<GraphNode, HashSet<GraphNode>>();
-
-        ArrayList<GraphNode> nodes = new ArrayList<GraphNode>();
-        GraphNode temp;
-
-        // Create the GraphNode objects
-        for (Point2D sample : samples) {
-            temp = new GraphNode(sample);
-            nodes.add(temp);
-        }
-
-        calculateEdges(nodes);
+        edges = new HashMap<ArmConfig, HashSet<ArmConfig>>();
+        calculateEdges(samples);
     }
 
-    private void addToEdges(GraphNode n1, GraphNode n2) {
-        HashSet<GraphNode> innerNodes;
+    private void addToEdges(ArmConfig n1, ArmConfig n2) {
+        HashSet<ArmConfig> innerNodes;
 
         if (edges.containsKey(n1)) {
             innerNodes = edges.get(n1);
@@ -46,22 +39,23 @@ public class EnvironmentMap {
 
         } else {
             // The key isn't in the map
-            innerNodes = new HashSet<GraphNode>();
+            innerNodes = new HashSet<ArmConfig>();
             innerNodes.add(n2);
             edges.put(n1, innerNodes);
         }
     }
 
-    private void calculateEdges(ArrayList<GraphNode> nodes) {
+    private void calculateEdges(ArrayList<ArmConfig> nodes) {
 
         //HashSet<GraphNode> indexed = new HashSet<GraphNode>();
         System.out.println("Starting edge calculation");
 
-        for (GraphNode node : nodes) {
-            for (GraphNode other : nodes) {
+        for (ArmConfig node : nodes) {
+            for (ArmConfig other : nodes) {
                 if (! node.equals(other)) {
-                    if (node.isNearby(other)) {
+                    if (tester.isValidStep(node, other)) {
                         addToEdges(node, other); 
+                        System.out.println("Found valid edge");
                     }
                 }
             }

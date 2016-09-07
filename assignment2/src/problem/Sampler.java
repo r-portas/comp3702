@@ -3,8 +3,9 @@ package problem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import util.Util;
+import tester.Tester;
 
 /**
  * Samples a given configuration
@@ -20,12 +21,18 @@ public class Sampler {
     private Random rand;
 
     private ArrayList<Point2D> sampleList;
+    private ArrayList<ArmConfig> armList;
+    private Tester tester;
 
     // The range near a sample
     private double nearbyDistance = 0.01;
 
     public ArrayList<Point2D> getSampleList() {
         return sampleList;
+    }
+
+    public ArrayList<ArmConfig> getConfigList() {
+        return armList;
     }
     
     private Point2D createPoint(double x, double y) {
@@ -60,6 +67,22 @@ public class Sampler {
         return createPoint(x, y);
     }
 
+    public ArmConfig getRandomArmConfig(int joints, boolean gripper) {
+        double x = rand.nextDouble();
+        double y = rand.nextDouble();
+        Point2D base = new Point2D.Double(x, y);
+       
+        List<Double> armJoints = new ArrayList<Double>();
+
+        for (int i = 0; i < joints; i++) {
+            double angle = rand.nextDouble() * (Tester.MAX_JOINT_ANGLE - Tester.MIN_JOINT_ANGLE) + Tester.MIN_JOINT_ANGLE;
+            armJoints.add(angle);
+        }
+
+        ArmConfig arm = new ArmConfig(base, armJoints);
+        return arm;
+    }
+
     public Sampler(double width, double height, ProblemSpec ps) {
         this.width = width;
         this.height = height;
@@ -68,6 +91,8 @@ public class Sampler {
 
         this.rand = new Random();
         sampleList = new ArrayList<Point2D>();
+
+        tester = new Tester();
     }
 
     public Sampler(ProblemSpec ps) {
@@ -78,20 +103,26 @@ public class Sampler {
 
         this.rand = new Random();
         sampleList = new ArrayList<Point2D>();
-    }
 
-    public void sampleCustomMethod(int samples) {
+        tester = new Tester();
+    }
+    
+    public void sampleCustomMethod(int samples, List<Obstacle> obstacles, int joints, boolean gripper) {
         int complete = 0;
+        armList = new ArrayList<ArmConfig>();
         sampleList = new ArrayList<Point2D>();
 
         while (complete < samples) {
-            Point2D q1 = sampleRandomPoint();
+            ArmConfig temp = getRandomArmConfig(joints, gripper);
 
-            if (ps.checkCollision(q1) == false) {
-                // q1 is colliding
-                sampleList.add(q1);
+            if (tester.hasCollision(temp, obstacles) == false && tester.fitsBounds(temp)) {
+
+                // For visual debugging
+                sampleList.add(temp.getBaseCenter());
+
+                armList.add(temp);
                 complete += 1;
-                System.out.println("Position (" + q1.getX() + ", " + q1.getY() + ")");
+                System.out.println(temp);
             }
                 
         }
