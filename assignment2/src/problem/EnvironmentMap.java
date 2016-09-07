@@ -1,6 +1,7 @@
 package problem;
 
 import java.util.*;
+import java.awt.geom.Point2D;
 
 public class EnvironmentMap {
     private HashMap<GraphNode, HashSet<GraphNode>> edges;
@@ -12,7 +13,7 @@ public class EnvironmentMap {
     /**
      * Takes in the samples from the Sampler class
      */
-    public void generateMap(ArrayList<double[]> samples) {
+    public void generateMap(ArrayList<Point2D> samples) {
 
         // Clear the old edgemap
         edges = new HashMap<GraphNode, HashSet<GraphNode>>();
@@ -21,7 +22,7 @@ public class EnvironmentMap {
         GraphNode temp;
 
         // Create the GraphNode objects
-        for (double[] sample : samples) {
+        for (Point2D sample : samples) {
             temp = new GraphNode(sample);
             nodes.add(temp);
         }

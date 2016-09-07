@@ -1,6 +1,7 @@
 package problem;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,8 +63,8 @@ public class Obstacle {
      * Checks if the obstacle is causing a collision
      * @author Roy Portas
      */
-    public boolean checkCollision(double x, double y) {
-        return rect.contains(x, y);
+    public boolean checkCollision(Point2D point) {
+        return rect.contains(point.getX(), point.getY());
     }
 
     /**

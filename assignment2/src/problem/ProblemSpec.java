@@ -9,6 +9,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.awt.geom.Point2D;
 
 /**
  * This class represents the specifications of a given problem and solution;
@@ -248,9 +249,9 @@ public class ProblemSpec {
      * Checks for a collision with obstacles
      * @author Roy Portas
      */
-    public boolean checkCollision(double x, double y) {
+    public boolean checkCollision(Point2D point) {
         for (Obstacle o : obstacles) {
-            if (o.checkCollision(x, y)) {
+            if (o.checkCollision(point)) {
                 return true;
             }
         }

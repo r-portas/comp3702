@@ -3,7 +3,8 @@ package problem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import visualiser.VisualisationPanel;
+import java.awt.geom.Point2D;
+import util.Util;
 
 /**
  * Samples a given configuration
@@ -18,27 +19,25 @@ public class Sampler {
     private double height;
     private Random rand;
 
-    private ArrayList<double[]> sampleList;
+    private ArrayList<Point2D> sampleList;
 
     // The range near a sample
     private double nearbyDistance = 0.01;
 
-    public ArrayList<double[]> getSampleList() {
+    public ArrayList<Point2D> getSampleList() {
         return sampleList;
     }
     
-    private double[] createPoint(double x, double y) {
-        double[] point = new double[2];
-        point[0] = x;
-        point[1] = y;
+    private Point2D createPoint(double x, double y) {
 
+        Point2D point = new Point2D.Double(x, y);
         return point;
     }
 
     /**
      * Samples a random point in the workspace
      */
-    private double[] sampleRandomPoint() {
+    private Point2D sampleRandomPoint() {
         double x = rand.nextDouble() * width;
         double y = rand.nextDouble() * height;
 
@@ -50,13 +49,13 @@ public class Sampler {
      *
      * The point will be between -nearbyDistance to nearbyDistance of the given point
      */
-    private double[] sampleNearbyPoint(double[] point) {
+    private Point2D sampleNearbyPoint(Point2D point) {
         double x = (rand.nextDouble() * 2 * nearbyDistance) - nearbyDistance;
         double y = (rand.nextDouble() * 2 * nearbyDistance) - nearbyDistance;
 
         // Get the point near the desired point
-        x += point[0];
-        y += point[1];
+        x += point.getX();
+        y += point.getY();
 
         return createPoint(x, y);
     }
@@ -68,7 +67,7 @@ public class Sampler {
         this.ps = ps;
 
         this.rand = new Random();
-        sampleList = new ArrayList<double[]>();
+        sampleList = new ArrayList<Point2D>();
     }
 
     public Sampler(ProblemSpec ps) {
@@ -78,21 +77,21 @@ public class Sampler {
         this.ps = ps;
 
         this.rand = new Random();
-        sampleList = new ArrayList<double[]>();
+        sampleList = new ArrayList<Point2D>();
     }
 
     public void sampleCustomMethod(int samples) {
         int complete = 0;
-        sampleList = new ArrayList<double[]>();
+        sampleList = new ArrayList<Point2D>();
 
         while (complete < samples) {
-            double[] q1 = sampleRandomPoint();
+            Point2D q1 = sampleRandomPoint();
 
-            if (ps.checkCollision(q1[0], q1[1]) == false) {
+            if (ps.checkCollision(q1) == false) {
                 // q1 is colliding
                 sampleList.add(q1);
                 complete += 1;
-                System.out.println("Position (" + q1[0] + ", " + q1[1] + ")");
+                System.out.println("Position (" + q1.getX() + ", " + q1.getY() + ")");
             }
                 
         }
@@ -101,26 +100,26 @@ public class Sampler {
 
     public void sampleNearObstacles(int samples) {
         int complete = 0;
-        sampleList = new ArrayList<double[]>();
+        sampleList = new ArrayList<Point2D>();
 
         while (complete < samples) {
-            double[] q1 = sampleRandomPoint();
-            double[] q2 = sampleNearbyPoint(q1);
+            Point2D q1 = sampleRandomPoint();
+            Point2D q2 = sampleNearbyPoint(q1);
 
             // Check if q1 is colliding
-            if (ps.checkCollision(q1[0], q1[1]) == false || ps.checkCollision(q2[0], q2[1]) == false) {
-                if (ps.checkCollision(q1[0], q1[1])) {
+            if (ps.checkCollision(q1) == false || ps.checkCollision(q2) == false) {
+                if (ps.checkCollision(q1)) {
                     // q1 is colliding
                     sampleList.add(q2);
                     complete += 1;
-                    System.out.println("Position (" + q2[0] + ", " + q2[1] + ")");
+                    System.out.println("Position (" + q2.getX() + ", " + q2.getY() + ")");
 
-                } else if (ps.checkCollision(q2[0], q2[1])) {
+                } else if (ps.checkCollision(q2)) {
                     // q2 is colliding
                     sampleList.add(q1);
                     complete += 1;
 
-                    System.out.println("Position (" + q1[0] + ", " + q1[1] + ")");
+                    System.out.println("Position (" + q1.getX() + ", " + q1.getY() + ")");
                 }
 
             }

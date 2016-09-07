@@ -23,6 +23,22 @@
 
     \section{Sampling Strategy}
 
+    There are various sampling strategies that could work for the given problem, most notably:
+
+    \begin{itemize}
+        \item Sampling Near Obstacles
+        
+            This method is promising, since we are given all the obstacles at the start. Thus this sampling only needs to be done once. However since we are given the complete workspace, there are better choices for this problem.
+
+        \item Sample Inside a Passage
+
+            The obstacles for our problem can be sparse, with large distances between obstacles. Thus this strategy would not be an optimal choice.
+
+        \item Using Workspace Information
+
+            This strategy also looks promising, as we are given the complete workspace. Thus a possible solution is to sample the workspace randomly to create a discrete grid. The grid can then be converted into a search graph using rapidly exploring random trees.
+    \end{itemize}
+
     \section{What will cause the program to succeed}
 
     \section{What will cause the program to fail}

@@ -2,6 +2,7 @@ package problem;
 
 import java.lang.Exception;
 import java.util.ArrayList;
+import java.awt.geom.Point2D;
 
 /**
  * The main class which manages the following:
@@ -17,7 +18,7 @@ public class Solver {
     private EnvironmentMap envMap;
 
     public Solver() {
-        envMap = new EnvironmentMap();
+        //envMap = new EnvironmentMap();
     }
 
     /**
@@ -40,7 +41,7 @@ public class Solver {
         sampler.sampleNearObstacles(samples);
     }
 
-    public ArrayList<double[]> getSampleList() {
+    public ArrayList<Point2D> getSampleList() {
         return sampler.getSampleList();
     }
 

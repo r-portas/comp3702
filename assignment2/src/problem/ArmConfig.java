@@ -45,6 +45,7 @@ public class ArmConfig {
         this.jointAngles = new ArrayList<Double>(jointAngles);
         this.gripper = false;
         generateLinks();
+        generateChair();
     }
 
     /**
@@ -149,6 +150,14 @@ public class ArmConfig {
             sb.append(" ");
             sb.append(angle);
         }
+
+        if (gripper) {
+            for (Double gripper : gripperLengths) {
+                sb.append(" ");
+                sb.append(gripper);
+            }
+        }
+
         return sb.toString();
     }
 
@@ -245,6 +254,11 @@ public class ArmConfig {
         if (this.getJointCount() != otherState.getJointCount()) {
             return -1;
         }
+
+        if (this.hasGripper() != otherState.hasGripper()) {
+            return -1;
+        }
+
         double totalDist = base.distance(otherState.getBaseCenter());
         List<Line2D> otherLinks = otherState.getLinks();
         for (int i = 0; i < links.size(); i++) {

@@ -1,6 +1,7 @@
 package problem;
 
 import java.util.ArrayList;
+import java.awt.geom.Point2D;
 
 /**
  * Represents a single graph node
@@ -18,8 +19,8 @@ public class GraphNode {
         initNode(x, y);
     }
 
-    public GraphNode(double[] point) {
-        initNode(point[0], point[1]);
+    public GraphNode(Point2D point) {
+        initNode(point.getX(), point.getY());
     }
 
     public void initNode(double x, double y) {
