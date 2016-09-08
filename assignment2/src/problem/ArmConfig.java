@@ -219,6 +219,14 @@ public class ArmConfig {
     public List<Line2D> getChair() { return new ArrayList<Line2D>(chair); }
 
     /**
+     * Gets the distance between the two center points of the bases
+     * @author Roy Portas
+     */
+    public double getDistanceTo(ArmConfig other) {
+        return getBaseCenter().distance(other.getBaseCenter());
+    }
+
+    /**
      * Returns the maximum straight-line distance between the link endpoints
      * in this state vs. the other state, or -1 if the link counts don't match.
      * 

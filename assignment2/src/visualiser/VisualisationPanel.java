@@ -67,7 +67,7 @@ public class VisualisationPanel extends JComponent {
     }
 
     public void runCustomSample() {
-        solver.sampleCustom(10000);
+        solver.sampleCustom(50000);
         this.repaint();
     }
 

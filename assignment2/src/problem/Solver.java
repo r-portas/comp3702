@@ -15,10 +15,9 @@ public class Solver {
 
     private ProblemSpec ps;
     private Sampler sampler;
-    private EnvironmentMap envMap;
+    private KDTree kdTree;
 
     public Solver() {
-        envMap = new EnvironmentMap();
     }
 
     /**
@@ -34,7 +33,20 @@ public class Solver {
     public void sampleCustom(int samples) {
         sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
 
-        envMap.generateMap(sampler.getConfigList());
+        ArrayList<ArmConfig> configList = sampler.getConfigList();
+        kdTree = new KDTree();
+
+        System.out.println("Adding configs to KDTree");
+        
+        for (ArmConfig ac : configList) {
+            kdTree.insert(ac);
+        }
+
+        System.out.println("Tree building complete");
+
+        ArmConfig initial = ps.getInitialState();
+        System.out.println(kdTree.nearest(initial));
+        System.out.println("KDTree size: " + kdTree.size());
     }
 
     public void sampleNearObstacles(int samples) {
