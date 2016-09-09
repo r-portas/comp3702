@@ -10,10 +10,10 @@
 - AND level: The opponent's move (Minimize value)
 
 ## Minmax Algorithm
-- Using the current state as the initial search, build the game tree to the maximal depth _h_ (called horizon) feasible within the time limit
+- Using the current state as the initial search, build the game tree to the maximal depth __h__ (called horizon) feasible within the time limit
 - Evaluate the states of the leaf nodes. Use a heuristic as an evaluation function to estimate how favorable a state is.
 - Back up the results from the leaves to the root and pick the best action assuming the worst case from MIN
-    - At each non-leaf node N, the backup up value is the value of the best state that MAX can reach at depth _h_ if MIN plays well (by the same criterion as MAX applies to itself)
+    - At each non-leaf node N, the backup up value is the value of the best state that MAX can reach at depth __h__ if MIN plays well (by the same criterion as MAX applies to itself)
     - Same criterion: Same evaluation function
 
 Psuedo-code:
@@ -40,11 +40,20 @@ Psuedo-code:
     - Number of possible moves
     - Number of squares controlled
 
-## Improving Minmax: Pruning
+## Improving Minmax: Alpha Beta Pruning
 
-### Alpha Beta Pruning
-- _a_: Best already explored option along the path to the root maximizer
-- _b_: Best already explored option along path to the root minimizer
+- __a__: Best already explored option along the path to the root maximizer
+- __b__: Best already explored option along path to the root minimizer
 - Explore the game tree to depth _h_ in depth-first manner
 - Back _a_ and _b_ values whenever possible
 - Prune branches that can't lead to changing the final decision
+
+### How much do we gain?
+- Assume a game tree of uniform branching factor __b__
+- __h__: Depth of the tree
+- Minmax examinesO(b^h) nodes, so does alpha-beta in the worst case
+
+## Decision Theory
+- A framework for an agent to choose the "best" decision in a non-deterministic environment
+- Can be thought of as a calculus for decision making
+- A good basis for building intelligent (rational) agents
