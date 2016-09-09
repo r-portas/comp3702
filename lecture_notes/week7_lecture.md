@@ -16,6 +16,16 @@
     - At each non-leaf node N, the backup up value is the value of the best state that MAX can reach at depth _h_ if MIN plays well (by the same criterion as MAX applies to itself)
     - Same criterion: Same evaluation function
 
+Psuedo-code:
+```
+1. Expand the game tree from the current state (where it is MAX's turn to play) to depth h
+2. Compute the evaluation functin at every leaf of the tree
+3. Back up the values from the leaves to the root of the tree as follows
+    a. A MAX node gets the maximum of the evaluation of its successors
+    b. A MIN node gets the minimum of the evaluation of its successors
+4. Select the move toward a MIN node that has the largest backed up value
+```
+
 ## Evaluation Function
 - Need a heuristic to estimate how favorable is a game state for the agent (MAX)
     - Usually called the evaluation function e: S -> R
@@ -24,6 +34,17 @@
     - e(s) = s: s is neutral
 
 ## Construction of an Evaluation Function
+- Usually weighted sum of "features"
+- Features may include
+    - Number of pieces of each type
+    - Number of possible moves
+    - Number of squares controlled
 
+## Improving Minmax: Pruning
 
-## Pruning
+### Alpha Beta Pruning
+- _a_: Best already explored option along the path to the root maximizer
+- _b_: Best already explored option along path to the root minimizer
+- Explore the game tree to depth _h_ in depth-first manner
+- Back _a_ and _b_ values whenever possible
+- Prune branches that can't lead to changing the final decision
