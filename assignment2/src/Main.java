@@ -7,22 +7,34 @@ import java.lang.Exception;
  */
 public class Main {
 
-    static Sampler sampler;
+    static Solver solver;
 
     public static void main(String[] args) {
         ProblemSpec ps = new ProblemSpec();
+        solver = new Solver();
 
         try {
             ps.loadProblem("inputEx/4_joints.txt");
 
-            sampler = new Sampler(ps);
-            sampler.sampleNearObstacles(50);
+            long start = System.currentTimeMillis();
 
-            ps.assumeDirectSolution();
-            ps.saveSolution("inputEx/1_sol.txt");
+            System.out.println(
+
+            solver.loadProblemSpec(ps);
+
+            solver.sampleCustom(1400000);
+
+            long end = System.currentTimeMillis();
+            long diff = end - start;
+
+            System.out.println("Elapsed time: " + (diff / 1000));
+
+            //ps.assumeDirectSolution();
+            //ps.saveSolution("inputEx/1_sol.txt");
 
         } catch (Exception e) {
             System.out.println("Something bad happened :(");
+            System.out.println(e);
         }
     }
 }

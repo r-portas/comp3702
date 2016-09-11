@@ -148,6 +148,7 @@ public class ArmConfig {
      * @return a space-separated string representation of this configuration.
      */
     public String toString() {
+        /*
         StringBuilder sb = new StringBuilder();
         sb.append(base.getX());
         sb.append(" ");
@@ -165,6 +166,11 @@ public class ArmConfig {
         }
 
         return sb.toString();
+        */
+
+        String res = "";
+        res += "((" + base.getX() + ", " + base.getY() + ") dist: " + distToGoal + ")";
+        return res;
     }
 
     /**

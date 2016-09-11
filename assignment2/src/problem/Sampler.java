@@ -73,7 +73,6 @@ public class Sampler {
         double x = rand.nextDouble();
         double y = rand.nextDouble();
         Point2D base = new Point2D.Double(x, y);
-        System.out.println(base);
        
         List<Double> armJoints = new ArrayList<Double>();
 
