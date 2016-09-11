@@ -45,8 +45,8 @@ public class Sampler {
      * Samples a random point in the workspace
      */
     private Point2D sampleRandomPoint() {
-        double x = rand.nextDouble() * width;
-        double y = rand.nextDouble() * height;
+        double x = Math.round(rand.nextDouble() * width * 1000)/1000;
+        double y = Math.round(rand.nextDouble() * height * 1000)/1000;
 
         return createPoint(x, y);
     }
@@ -68,9 +68,12 @@ public class Sampler {
     }
 
     public ArmConfig getRandomArmConfig(int joints, boolean gripper) {
+        //double x = (double) rand.nextInt(1000) / 1000;
+        //double y = (double) rand.nextInt(1000) / 1000;
         double x = rand.nextDouble();
         double y = rand.nextDouble();
         Point2D base = new Point2D.Double(x, y);
+        System.out.println(base);
        
         List<Double> armJoints = new ArrayList<Double>();
 
@@ -80,6 +83,7 @@ public class Sampler {
         }
 
         ArmConfig arm = new ArmConfig(base, armJoints);
+        arm.setDistanceToGoal(ps.getGoalState());
         return arm;
     }
 
@@ -122,7 +126,6 @@ public class Sampler {
 
                 armList.add(temp);
                 complete += 1;
-                System.out.println(temp);
             }
                 
         }

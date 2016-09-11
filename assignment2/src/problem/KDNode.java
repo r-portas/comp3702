@@ -44,7 +44,7 @@ public class KDNode {
         for (ArmConfig temp : points) {
             double dist = temp.getDistanceTo(ac);
             
-            if (dist < minDist) {
+            if (dist < minDist && temp.visited == false) {
                 minDist = dist;
                 best = temp;
             }

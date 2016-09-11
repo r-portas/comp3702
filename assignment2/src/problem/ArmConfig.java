@@ -32,6 +32,12 @@ public class ArmConfig {
     /** Lengths of gripper segments */
     private List<Double> gripperLengths;
 
+    // Stores if a node has been visited
+    public boolean visited = false;
+    public boolean expanded = false;
+    public ArmConfig parent = null;
+    private double distToGoal = Double.MAX_VALUE;
+
 
     /**
      * Constructor (no gripper)
@@ -226,6 +232,14 @@ public class ArmConfig {
         return getBaseCenter().distance(other.getBaseCenter());
     }
 
+    public void setDistanceToGoal(ArmConfig goal) {
+        distToGoal = getDistanceTo(goal);
+    }
+
+    public double getDistanceToGoal() {
+        return distToGoal;
+    }
+
     /**
      * Returns the maximum straight-line distance between the link endpoints
      * in this state vs. the other state, or -1 if the link counts don't match.
@@ -364,8 +378,6 @@ public class ArmConfig {
     }
 
     private void generateChair() {
-
-        System.out.println(gripperLengths);
 
         chair = new ArrayList<Line2D>();
         double x1 = base.getX();

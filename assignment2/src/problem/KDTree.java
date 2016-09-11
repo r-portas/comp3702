@@ -2,6 +2,7 @@ package problem;
 
 import java.util.*;
 import java.awt.geom.*;
+import tester.Tester;
 
 /**
  * Stores the tree
@@ -38,7 +39,7 @@ public class KDTree {
         num++;
         boolean inserted = true;
 
-        if ((compareX && (point.getBaseCenter().getX() <= point.getBaseCenter().getX()) ||
+        if ((compareX && (ac.getBaseCenter().getX() <= point.getBaseCenter().getX()) ||
                     (!compareX && (ac.getBaseCenter().getY() <= point.getBaseCenter().getY())))) {
             if (left == null) {
                 left = new KDTree();
@@ -122,7 +123,24 @@ public class KDTree {
     }
 
     public ArmConfig nearest(ArmConfig ac) {
-        return nearest(ac, Double.MAX_VALUE);
+        
+        // Specify the nearest distance
+        return nearest(ac, Tester.MAX_BASE_STEP);
+    }
+
+    public ArrayList<ArmConfig> nearestList(ArmConfig ac) {
+        ArrayList<ArmConfig> items = new ArrayList<ArmConfig>();
+
+        ArmConfig a = nearest(ac);
+
+        while (a != null) {
+            a.visited = true;
+            items.add(a);
+
+            a = nearest(ac);
+        }
+
+        return items;
     }
 
     public ArmConfig nearest(ArmConfig ac, double minDist) {
@@ -130,15 +148,17 @@ public class KDTree {
             return null;
         }
 
+        /*
         if (point.equals(ac)) {
             return point;
         }
+        */
 
         ArmConfig bestConfig = null;
         double bestDist = minDist;
         double rootDist = point.getDistanceTo(ac);
 
-        if (rootDist < minDist) {
+        if (rootDist <= minDist && point.visited == false && !point.equals(ac)) {
             bestConfig = point;
             bestDist = rootDist;
         }
@@ -151,6 +171,7 @@ public class KDTree {
 
             if (firstBestConfig != null) {
                 bestConfig = firstBestConfig;
+                bestDist = bestConfig.getDistanceTo(ac);
             }
         }
 
