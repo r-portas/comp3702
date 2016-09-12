@@ -1,8 +1,9 @@
 package problem;
 
 import java.lang.Exception;
-import java.util.ArrayList;
+import java.util.*;
 import java.awt.geom.Point2D;
+import java.lang.Exception;
 
 /**
  * The main class which manages the following:
@@ -25,21 +26,55 @@ public class Solver {
      */
     public void loadProblemSpec(ProblemSpec ps) {
         this.ps = ps;
-        
+
         // Load up the sampler
         sampler = new Sampler(this.ps);
     }
 
+    public void saveSolution(ArmConfig end, String filename) {
+        List<ArmConfig> path = new ArrayList<ArmConfig>();
+        while (end != null) {
+            path.add(end);
+            end = end.parent;
+        }
+      
+        Collections.reverse(path);
+
+        ps.setPath(path);
+        try {
+            ps.saveSolution(filename);
+        } catch (Exception e) {
+            System.out.println("An error occured saving the file");
+            System.out.println(e);
+        }
+    }
+
     public void kdTest() {
-         kdTree = new KDTree();
+        kdTree = new KDTree();
+        Search search = new Search(ps);
 
-         ArmConfig start = new ArmConfig("0.1 0.1 0.2");
-         kdTree.insert(start);
-         kdTree.insert(new ArmConfig("0.101 0.101 0.3"));
-         kdTree.insert(new ArmConfig("0.0999 0.0999 0.3"));
-         kdTree.insert(new ArmConfig("0.1 0.0999 0.3"));
+        ArmConfig start = new ArmConfig("0.1 0.1 0.2");
+        ArmConfig end = new ArmConfig("0.2 0.2 0.3");
 
-         System.out.println(kdTree.nearestList(start));
+        ArmConfig res = search.checkValidPath(start, end);
+
+        if (res != null) {
+            
+            List<ArmConfig> path = new ArrayList<ArmConfig>();
+            while (res != null) {
+                path.add(res);
+                res = res.parent;
+            }
+           
+            ps.setPath(path);
+            try {
+                ps.saveSolution("inputEx/test_movement.txt");
+            } catch (Exception e) {
+                System.out.println("LOL");
+            }
+        } else {
+            System.out.println("Could not get valid path!");
+        }
 
     }
 
@@ -57,7 +92,7 @@ public class Solver {
         ArmConfig goal = ps.getGoalState();
         goal.setDistanceToGoal(goal);
         kdTree.insert(goal);
-        
+
         for (ArmConfig ac : configList) {
             kdTree.insert(ac);
         }
@@ -67,7 +102,9 @@ public class Solver {
         System.out.println("Starting point: " + ps.getInitialState());
 
         Search search = new Search(ps);
-        search.runUCSearch(kdTree, ps.getInitialState(), ps.getGoalState());
+        ArmConfig endPoint = search.runUCSearch(kdTree, ps.getInitialState(), ps.getGoalState());
+
+        saveSolution(endPoint, "test_sol.txt");
     }
 
     public void sampleNearObstacles(int samples) {

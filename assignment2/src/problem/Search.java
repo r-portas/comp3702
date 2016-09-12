@@ -6,13 +6,16 @@
 package problem;
 
 import java.util.*;
+import tester.Tester;
 
 public class Search {
 
     private ProblemSpec ps;
+    private Tester tester;
 
     public Search(ProblemSpec ps) {
         this.ps = ps;
+        this.tester = new Tester();
     }
 
     private class ArmComparator implements Comparator<ArmConfig> {
@@ -29,7 +32,40 @@ public class Search {
         }
     }
 
-    public String runUCSearch(KDTree tree, ArmConfig start, ArmConfig end) {
+    public ArmConfig checkValidPath(ArmConfig start, ArmConfig end) {
+        
+        ArmConfig temp = start;
+        ArmConfig last = start;
+
+        while (!temp.getBaseCenter().equals(end.getBaseCenter())) {
+            last = temp;
+            temp = new ArmConfig(last);
+            temp.moveTowards(end);
+
+            if (!tester.isValidStep(temp, last)) {
+                return null;
+            }
+
+            if (tester.hasCollision(temp, ps.getObstacles())) {
+                return null;
+            }
+
+            temp.parent = last;
+        }
+
+        if (!tester.isValidStep(temp, end)) {
+            return null;
+        }
+
+        if (tester.hasCollision(temp, ps.getObstacles())) {
+            return null;
+        }
+
+        return temp;
+
+    }
+
+    public ArmConfig runUCSearch(KDTree tree, ArmConfig start, ArmConfig end) {
         Comparator<ArmConfig> comp = new ArmComparator();
         PriorityQueue<ArmConfig> queue = new PriorityQueue<ArmConfig>(10, comp);
        
@@ -42,27 +78,31 @@ public class Search {
         while (true) {
             System.out.println("Queue size: " + queue.size());
             if (queue.size() == 0) {
-                return "No matches found";
+                return null;
             }
             temp = queue.poll();
-            temp.expanded = true;
-            System.out.println(temp);
+            temp.visited = true;
 
-            //System.out.println(temp.pos);
 
-            if (temp == end) {
+            if (temp.getBaseCenter().equals(end.getBaseCenter())) {
                 // Returns the path
-                System.out.println("Found path!!!");
-                return "Found path";
+                System.out.println("Found path!");
+                return temp;
             }
 
             List<ArmConfig> connected = tree.nearestList(temp);
 
             // Add the new nodes
             for (ArmConfig dest : connected) {
-                
-                if (dest.expanded == false) {
-                    dest.parent = temp;
+                if (dest == null) {
+                    continue;
+                }
+
+
+                ArmConfig valid = checkValidPath(temp, dest);
+                if (valid != null) {
+                    dest.parent = valid;
+                    System.out.println("Found valid path: " + temp + " > " + dest);
                     queue.add(dest);
                 }
                 

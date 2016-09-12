@@ -10,6 +10,7 @@ import tester.Tester;
 public class KDTree {
 
     private ArmConfig point;
+    private HashSet<ArmConfig> checked;
     private KDTree left;
     private KDTree right;
     private boolean compareX;
@@ -17,6 +18,7 @@ public class KDTree {
 
     public KDTree() {
         num = 0;
+        checked = new HashSet<ArmConfig>();
     }
 
     public int size() {
@@ -125,17 +127,17 @@ public class KDTree {
     public ArmConfig nearest(ArmConfig ac) {
         
         // Specify the nearest distance
-        return nearest(ac, Tester.MAX_BASE_STEP);
+        return nearest(ac, Double.MAX_VALUE);
     }
 
     public ArrayList<ArmConfig> nearestList(ArmConfig ac) {
         ArrayList<ArmConfig> items = new ArrayList<ArmConfig>();
-
+        checked = new HashSet<ArmConfig>();
         ArmConfig a = nearest(ac);
 
         while (a != null) {
-            a.visited = true;
             items.add(a);
+            checked.add(a);
 
             a = nearest(ac);
         }
@@ -158,7 +160,8 @@ public class KDTree {
         double bestDist = minDist;
         double rootDist = point.getDistanceTo(ac);
 
-        if (rootDist <= minDist && point.visited == false && !point.equals(ac)) {
+        //if (rootDist <= minDist && point.visited == false && !point.equals(ac)) {
+        if (rootDist <= minDist && !checked.contains(point) && !point.equals(ac)) {
             bestConfig = point;
             bestDist = rootDist;
         }

@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.Comparable;
+import tester.Tester;
 
 /** 
  * Represents a configuration of the arm, i.e. base x-y coordinates and joint
  * angles. This class doesn't do any validity checking.
  */
-public class ArmConfig {
+public class ArmConfig implements Comparable<ArmConfig>{
 
     /** Length of each link */
     public static final double LINK_LENGTH = 0.05;
@@ -142,13 +144,16 @@ public class ArmConfig {
         chair = cfg.getChair();
     }
 
+    public int compareTo(ArmConfig other) {
+        return Double.compare(getDistanceToGoal(), other.getDistanceToGoal());
+    }
+
     /**
      * Returns a space-separated string representation of this configuration.
      *
      * @return a space-separated string representation of this configuration.
      */
     public String toString() {
-        /*
         StringBuilder sb = new StringBuilder();
         sb.append(base.getX());
         sb.append(" ");
@@ -166,11 +171,11 @@ public class ArmConfig {
         }
 
         return sb.toString();
-        */
 
-        String res = "";
-        res += "((" + base.getX() + ", " + base.getY() + ") dist: " + distToGoal + ")";
-        return res;
+        /*
+           String res = "";
+           res += "((" + base.getX() + ", " + base.getY() + ") dist: " + distToGoal + ")";
+           */
     }
 
     /**
@@ -180,6 +185,57 @@ public class ArmConfig {
      */
     public int getJointCount() {
         return jointAngles.size();
+    }
+
+    /**
+     * Moves the arm config towards the destination
+     */
+    public void moveTowards(ArmConfig dest) {
+        
+        moveChairToPosition(dest);
+        moveJointsToPosition(dest);
+    }
+
+    public void moveChairToPosition(ArmConfig dest) {
+        double max_size_length = Math.sqrt(Math.pow(Tester.MAX_BASE_STEP, 2)/2);
+
+        double x_diff = base.getX() - dest.getBaseCenter().getX();
+        double y_diff = base.getY() - dest.getBaseCenter().getY();
+
+        double x = base.getX();
+        double y = base.getY();
+
+        if (x_diff > 0) {
+            x -= Math.min(max_size_length, x_diff);
+        } else {
+            x += Math.min(max_size_length, x_diff * -1);
+        }
+
+        if (y_diff > 0) {
+            y -= Math.min(max_size_length, y_diff);
+        } else {
+            y += Math.min(max_size_length, y_diff * -1);
+        }
+
+        base.setLocation(x, y);
+        
+    } 
+
+    /**
+     * Moves the joints towards the desired position
+     */
+    public void moveJointsToPosition(ArmConfig dest) {
+        List<Double> joints = dest.getJointAngles();
+        for (int i = 0; i < joints.size(); i++) {
+            double dist = jointAngles.get(i) - joints.get(i);
+            if (dist < 0) {
+                // Its smaller
+                jointAngles.set(i, jointAngles.get(i) + Math.min(dist * -1, Tester.MAX_JOINT_STEP));
+            } else {
+                // Its larger
+                jointAngles.set(i, jointAngles.get(i) - Math.min(dist, Tester.MAX_JOINT_STEP));
+            }
+        }
     }
 
     /**
@@ -212,22 +268,22 @@ public class ArmConfig {
      *
      * @return the list of gripper lengths.
      */
-    public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
+            public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
 
-    /**
-     * Returns the list of links as Line2D.
-     * 
-     * @return the list of links as Line2D.
-     */
-    public List<Line2D> getLinks() {
-        return new ArrayList<Line2D>(links);
-    }
+        /**
+         * Returns the list of links as Line2D.
+         * 
+         * @return the list of links as Line2D.
+         */
+        public List<Line2D> getLinks() {
+            return new ArrayList<Line2D>(links);
+        }
 
-    /**
-     * Returns the chair boundary as list of Line2D.
-     *
-     * @return the chair boundary as list of Line2D.
-     */
+        /**
+         * Returns the chair boundary as list of Line2D.
+         *
+         * @return the chair boundary as list of Line2D.
+         */
     public List<Line2D> getChair() { return new ArrayList<Line2D>(chair); }
 
     /**
