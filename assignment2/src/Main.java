@@ -18,8 +18,6 @@ public class Main {
 
             long start = System.currentTimeMillis();
 
-            System.out.println(
-
             solver.loadProblemSpec(ps);
 
             solver.sampleCustom(1400000);
