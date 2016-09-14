@@ -82,6 +82,8 @@ public class Solver {
         sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
 
         ArrayList<ArmConfig> configList = sampler.getConfigList();
+
+        /*
         kdTree = new KDTree();
 
         System.out.println("Adding configs to KDTree");
@@ -103,6 +105,11 @@ public class Solver {
 
         Search search = new Search(ps);
         ArmConfig endPoint = search.runUCSearch(kdTree, ps.getInitialState(), ps.getGoalState());
+
+        */
+        Search search = new Search(ps);
+
+        ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), ps.getGoalState());
 
         saveSolution(endPoint, "test_sol.txt");
     }

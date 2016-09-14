@@ -540,6 +540,7 @@ public class Tester {
                 return true;
             }
         }
+
         List<Line2D> chair = cfg.getChair();
         for (Line2D border: chair) {
             if (border.intersects(lenientRect)) {

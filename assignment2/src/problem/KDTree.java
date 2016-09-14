@@ -140,6 +140,7 @@ public class KDTree {
             checked.add(a);
 
             a = nearest(ac);
+            System.out.println(checked);
         }
 
         return items;

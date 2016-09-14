@@ -20,7 +20,7 @@ public class Main {
 
             solver.loadProblemSpec(ps);
 
-            solver.sampleCustom(1400000);
+            solver.sampleCustom(0);
 
             long end = System.currentTimeMillis();
             long diff = end - start;

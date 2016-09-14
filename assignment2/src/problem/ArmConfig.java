@@ -178,6 +178,15 @@ public class ArmConfig implements Comparable<ArmConfig>{
            */
     }
 
+    public boolean equals(Object o) {
+        ArmConfig other = (ArmConfig) o;
+        if (getBaseCenter().equals(other.getBaseCenter())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Returns the number of joints in this configuration.
      * 
@@ -194,6 +203,9 @@ public class ArmConfig implements Comparable<ArmConfig>{
         
         moveChairToPosition(dest);
         moveJointsToPosition(dest);
+        generateLinks();
+        generateChair();
+        
     }
 
     public void moveChairToPosition(ArmConfig dest) {
@@ -284,7 +296,9 @@ public class ArmConfig implements Comparable<ArmConfig>{
          *
          * @return the chair boundary as list of Line2D.
          */
-    public List<Line2D> getChair() { return new ArrayList<Line2D>(chair); }
+    public List<Line2D> getChair() {
+        return new ArrayList<Line2D>(chair); 
+    }
 
     /**
      * Gets the distance between the two center points of the bases

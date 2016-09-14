@@ -77,12 +77,11 @@ public class Sampler {
         List<Double> armJoints = new ArrayList<Double>();
 
         for (int i = 0; i < joints; i++) {
-            //double angle = rand.nextDouble() * (Tester.MAX_JOINT_ANGLE - Tester.MIN_JOINT_ANGLE) + Tester.MIN_JOINT_ANGLE;
-            double angle = 0.5 * (Tester.MAX_JOINT_ANGLE - Tester.MIN_JOINT_ANGLE) + Tester.MIN_JOINT_ANGLE;
+            double angle = rand.nextDouble() * (Tester.MAX_JOINT_ANGLE - Tester.MIN_JOINT_ANGLE) + Tester.MIN_JOINT_ANGLE;
             armJoints.add(angle);
         }
 
-        ArmConfig arm = new ArmConfig(base, armJoints);
+        ArmConfig arm = new ArmConfig(base, ps.getInitialState().getJointAngles());
         arm.setDistanceToGoal(ps.getGoalState());
         return arm;
     }

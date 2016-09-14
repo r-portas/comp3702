@@ -65,9 +65,17 @@ public class Search {
 
     }
 
-    public ArmConfig runUCSearch(KDTree tree, ArmConfig start, ArmConfig end) {
+    public ArmConfig runUCSearch(ArrayList<ArmConfig> configs, ArmConfig start, ArmConfig end) {
         Comparator<ArmConfig> comp = new ArmComparator();
         PriorityQueue<ArmConfig> queue = new PriorityQueue<ArmConfig>(10, comp);
+       
+        configs.add(end);
+        configs.add(start);
+
+        ArrayList<ArmConfig> possibleSols = new ArrayList<ArmConfig>();
+        for (ArmConfig config : configs) {
+            possibleSols.add(config);
+        }
        
         // First create the start node
         ArmConfig temp = ps.getInitialState();
@@ -77,12 +85,18 @@ public class Search {
 
         while (true) {
             System.out.println("Queue size: " + queue.size());
+            System.out.println("Nodes remaining: " + possibleSols.size());
             if (queue.size() == 0) {
                 return null;
             }
-            temp = queue.poll();
-            temp.visited = true;
 
+            temp = queue.poll();
+
+            if (!possibleSols.contains(temp)) {
+                continue;
+            }
+
+            temp.visited = true;
 
             if (temp.getBaseCenter().equals(end.getBaseCenter())) {
                 // Returns the path
@@ -90,10 +104,11 @@ public class Search {
                 return temp;
             }
 
-            List<ArmConfig> connected = tree.nearestList(temp);
+            // Remove the current point from the possible solutions
+            possibleSols.remove(temp);
 
             // Add the new nodes
-            for (ArmConfig dest : connected) {
+            for (ArmConfig dest : possibleSols) {
                 if (dest == null) {
                     continue;
                 }
@@ -102,7 +117,6 @@ public class Search {
                 ArmConfig valid = checkValidPath(temp, dest);
                 if (valid != null) {
                     dest.parent = valid;
-                    System.out.println("Found valid path: " + temp + " > " + dest);
                     queue.add(dest);
                 }
                 
