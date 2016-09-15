@@ -246,10 +246,15 @@ public class VisualisationPanel extends JComponent {
         }
 
         // draw the samples
+        /*
         for (Point2D item : solver.getSampleList()) {
             Shape circle = new Ellipse2D.Double(item.getX() * getWidth() - 2.5, item.getY() * getHeight() - 2.5, 5, 5);
             g2.setColor(Color.LIGHT_GRAY);
             g2.fill(circle);
+        }
+        */
+        for (ArmConfig config : solver.getConfigList()) {
+            paintState(g2, config);
         }
 
         g2.setStroke(new BasicStroke(2));

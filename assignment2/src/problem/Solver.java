@@ -17,7 +17,8 @@ public class Solver {
     private ProblemSpec ps;
     private Sampler sampler;
     private KDTree kdTree;
-
+    ArrayList<ArmConfig> configs;
+    
     public Solver() {
     }
 
@@ -29,6 +30,7 @@ public class Solver {
 
         // Load up the sampler
         sampler = new Sampler(this.ps);
+        configs = new ArrayList<ArmConfig>();
     }
 
     public void saveSolution(ArmConfig end, String filename) {
@@ -82,6 +84,7 @@ public class Solver {
         sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
 
         ArrayList<ArmConfig> configList = sampler.getConfigList();
+        configs = configList;
 
         /*
         kdTree = new KDTree();
@@ -120,6 +123,10 @@ public class Solver {
 
     public ArrayList<Point2D> getSampleList() {
         return sampler.getSampleList();
+    }
+
+    public ArrayList<ArmConfig> getConfigList() {
+        return configs;
     }
 
 }

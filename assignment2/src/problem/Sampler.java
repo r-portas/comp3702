@@ -81,7 +81,7 @@ public class Sampler {
             armJoints.add(angle);
         }
 
-        ArmConfig arm = new ArmConfig(base, ps.getInitialState().getJointAngles());
+        ArmConfig arm = new ArmConfig(base, armJoints);
         arm.setDistanceToGoal(ps.getGoalState());
         return arm;
     }
