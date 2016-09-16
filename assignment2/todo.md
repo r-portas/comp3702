@@ -2,6 +2,9 @@
 - Implement more sampling methods
     - Implement sampling method for generic joint angles
 - Find a midpoint between two configurations
+- Modify ArmConfig to allow sampled configs to have a _quantum_ joint state
+    - Once sampling is complete, sample different joint configurations on top of a single chair base
+    - If the current node is not the destination, ignore the final joint check
 
 
 ## Psuedo Algorithm
