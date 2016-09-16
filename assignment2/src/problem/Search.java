@@ -68,7 +68,7 @@ public class Search {
     public ArmConfig runUCSearch(ArrayList<ArmConfig> configs, ArmConfig start, ArmConfig end) {
         Comparator<ArmConfig> comp = new ArmComparator();
         PriorityQueue<ArmConfig> queue = new PriorityQueue<ArmConfig>(10, comp);
-       
+
         configs.add(end);
         configs.add(start);
 
@@ -76,6 +76,9 @@ public class Search {
         for (ArmConfig config : configs) {
             possibleSols.add(config);
         }
+
+        // Sort possible solutions by distance from goal
+        Collections.sort(possibleSols, comp);
        
         // First create the start node
         ArmConfig temp = ps.getInitialState();

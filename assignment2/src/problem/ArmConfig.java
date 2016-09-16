@@ -259,6 +259,10 @@ public class ArmConfig implements Comparable<ArmConfig>{
         return new Point2D.Double(base.getX(), base.getY());
     }
 
+    public void setBaseCenter(Point2D newBase) {
+        base = newBase;
+    }
+
     /**
      * Returns the list of joint angles in radians.
      * 

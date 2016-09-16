@@ -25,7 +25,7 @@ public class Sampler {
     private Tester tester;
 
     // The range near a sample
-    private double nearbyDistance = 0.01;
+    private double nearbyDistance = 0.05;
 
     public ArrayList<Point2D> getSampleList() {
         return sampleList;
@@ -67,9 +67,15 @@ public class Sampler {
         return createPoint(x, y);
     }
 
+    public ArmConfig getNearbyArmConfig(ArmConfig nearby, int joints, boolean gripper) {
+        ArmConfig result = getRandomArmConfig(joints, gripper);
+
+        Point2D dest = sampleNearbyPoint(nearby.getBaseCenter());
+        result.setBaseCenter(dest);
+        return result;
+    }
+
     public ArmConfig getRandomArmConfig(int joints, boolean gripper) {
-        //double x = (double) rand.nextInt(1000) / 1000;
-        //double y = (double) rand.nextInt(1000) / 1000;
         double x = rand.nextDouble();
         double y = rand.nextDouble();
         Point2D base = new Point2D.Double(x, y);
@@ -131,28 +137,27 @@ public class Sampler {
 
     }
 
-    public void sampleNearObstacles(int samples) {
+    public void sampleNearObstacles(int samples, List<Obstacles> obstacles, int joints, boolean gripper) {
         int complete = 0;
-        sampleList = new ArrayList<Point2D>();
 
         while (complete < samples) {
-            Point2D q1 = sampleRandomPoint();
-            Point2D q2 = sampleNearbyPoint(q1);
+            ArmConfig q1 = getRandomArmConfig();
+            ArmConfig q2 = getNearbyArmConfig(q1);
 
             // Check if q1 is colliding
-            if (ps.checkCollision(q1) == false || ps.checkCollision(q2) == false) {
-                if (ps.checkCollision(q1)) {
+            if (tester.hasCollision(q1, obstacles) == false || tester.hasCollision(q2, obstacles) == false) {
+                if (tester.hasCollision(q1, obstacles)) {
                     // q1 is colliding
-                    sampleList.add(q2);
+                    armList.add(q2);
                     complete += 1;
-                    System.out.println("Position (" + q2.getX() + ", " + q2.getY() + ")");
+                    System.out.println("Nearby point: " + q2);
 
-                } else if (ps.checkCollision(q2)) {
+                } else if (tester.hasCollision(q2, obstacles)) {
                     // q2 is colliding
-                    sampleList.add(q1);
+                    armList.add(q1);
                     complete += 1;
+                    System.out.println("Nearby point: " + q1);
 
-                    System.out.println("Position (" + q1.getX() + ", " + q1.getY() + ")");
                 }
 
             }

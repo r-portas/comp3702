@@ -86,39 +86,33 @@ public class Solver {
         ArrayList<ArmConfig> configList = sampler.getConfigList();
         configs = configList;
 
-        /*
-        kdTree = new KDTree();
-
-        System.out.println("Adding configs to KDTree");
-
-        // Insert the start and end states
-        kdTree.insert(ps.getInitialState());
-
         ArmConfig goal = ps.getGoalState();
         goal.setDistanceToGoal(goal);
-        kdTree.insert(goal);
-
-        for (ArmConfig ac : configList) {
-            kdTree.insert(ac);
-        }
-
-        System.out.println("Tree building complete");
-        System.out.println("KDTree size: " + kdTree.size());
-        System.out.println("Starting point: " + ps.getInitialState());
 
         Search search = new Search(ps);
-        ArmConfig endPoint = search.runUCSearch(kdTree, ps.getInitialState(), ps.getGoalState());
 
-        */
-        Search search = new Search(ps);
-
-        ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), ps.getGoalState());
+        ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), goal);
 
         saveSolution(endPoint, "test_sol.txt");
     }
 
     public void sampleNearObstacles(int samples) {
-        sampler.sampleNearObstacles(samples);
+        sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
+        sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), false);
+
+        ArrayList<ArmConfig> configList = sampler.getConfigList();
+        configs = configList;
+
+        ArmConfig goal = ps.getGoalState();
+        goal.setDistanceToGoal(goal);
+
+        Search search = new Search(ps);
+
+        ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), goal);
+
+        saveSolution(endPoint, "test_sol.txt");
+        
+
     }
 
     public ArrayList<Point2D> getSampleList() {
