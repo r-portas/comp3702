@@ -25,7 +25,7 @@ public class Sampler {
     private Tester tester;
 
     // The range near a sample
-    private double nearbyDistance = 0.05;
+    private double nearbyDistance = 0.1;
 
     public ArrayList<Point2D> getSampleList() {
         return sampleList;
@@ -109,6 +109,9 @@ public class Sampler {
         this.height = 1;
 
         this.ps = ps;
+        
+        armList = new ArrayList<ArmConfig>();
+        sampleList = new ArrayList<Point2D>();
 
         this.rand = new Random();
         sampleList = new ArrayList<Point2D>();
@@ -118,8 +121,6 @@ public class Sampler {
     
     public void sampleCustomMethod(int samples, List<Obstacle> obstacles, int joints, boolean gripper) {
         int complete = 0;
-        armList = new ArrayList<ArmConfig>();
-        sampleList = new ArrayList<Point2D>();
 
         while (complete < samples) {
             ArmConfig temp = getRandomArmConfig(joints, gripper);
@@ -137,12 +138,14 @@ public class Sampler {
 
     }
 
-    public void sampleNearObstacles(int samples, List<Obstacles> obstacles, int joints, boolean gripper) {
+    public void sampleNearObstacles(int samples, List<Obstacle> obstacles, int joints, boolean gripper) {
         int complete = 0;
 
         while (complete < samples) {
-            ArmConfig q1 = getRandomArmConfig();
-            ArmConfig q2 = getNearbyArmConfig(q1);
+            ArmConfig q1 = getRandomArmConfig(joints, gripper);
+            System.out.println(q1);
+            ArmConfig q2 = getNearbyArmConfig(q1, joints, gripper);
+            System.out.println(q2);
 
             // Check if q1 is colliding
             if (tester.hasCollision(q1, obstacles) == false || tester.hasCollision(q2, obstacles) == false) {
@@ -150,13 +153,11 @@ public class Sampler {
                     // q1 is colliding
                     armList.add(q2);
                     complete += 1;
-                    System.out.println("Nearby point: " + q2);
 
                 } else if (tester.hasCollision(q2, obstacles)) {
                     // q2 is colliding
                     armList.add(q1);
                     complete += 1;
-                    System.out.println("Nearby point: " + q1);
 
                 }
 

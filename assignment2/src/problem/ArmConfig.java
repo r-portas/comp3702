@@ -200,12 +200,12 @@ public class ArmConfig implements Comparable<ArmConfig>{
      * Moves the arm config towards the destination
      */
     public void moveTowards(ArmConfig dest) {
-        
+
         moveChairToPosition(dest);
         moveJointsToPosition(dest);
         generateLinks();
         generateChair();
-        
+
     }
 
     public void moveChairToPosition(ArmConfig dest) {
@@ -230,7 +230,7 @@ public class ArmConfig implements Comparable<ArmConfig>{
         }
 
         base.setLocation(x, y);
-        
+
     } 
 
     /**
@@ -261,6 +261,8 @@ public class ArmConfig implements Comparable<ArmConfig>{
 
     public void setBaseCenter(Point2D newBase) {
         base = newBase;
+        generateChair();
+        generateLinks();
     }
 
     /**
@@ -284,50 +286,50 @@ public class ArmConfig implements Comparable<ArmConfig>{
      *
      * @return the list of gripper lengths.
      */
-            public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
+        public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
 
         /**
          * Returns the list of links as Line2D.
          * 
          * @return the list of links as Line2D.
          */
-        public List<Line2D> getLinks() {
-            return new ArrayList<Line2D>(links);
-        }
+            public List<Line2D> getLinks() {
+                return new ArrayList<Line2D>(links);
+            }
 
         /**
          * Returns the chair boundary as list of Line2D.
          *
          * @return the chair boundary as list of Line2D.
          */
-    public List<Line2D> getChair() {
-        return new ArrayList<Line2D>(chair); 
-    }
+        public List<Line2D> getChair() {
+            return new ArrayList<Line2D>(chair); 
+        }
 
-    /**
-     * Gets the distance between the two center points of the bases
-     * @author Roy Portas
-     */
-    public double getDistanceTo(ArmConfig other) {
-        return getBaseCenter().distance(other.getBaseCenter());
-    }
+        /**
+         * Gets the distance between the two center points of the bases
+         * @author Roy Portas
+         */
+        public double getDistanceTo(ArmConfig other) {
+            return getBaseCenter().distance(other.getBaseCenter());
+        }
 
-    public void setDistanceToGoal(ArmConfig goal) {
-        distToGoal = getDistanceTo(goal);
-    }
+        public void setDistanceToGoal(ArmConfig goal) {
+            distToGoal = getDistanceTo(goal);
+        }
 
-    public double getDistanceToGoal() {
-        return distToGoal;
-    }
+        public double getDistanceToGoal() {
+            return distToGoal;
+        }
 
-    /**
-     * Returns the maximum straight-line distance between the link endpoints
-     * in this state vs. the other state, or -1 if the link counts don't match.
-     * 
-     * @param otherState
-     *            the other state to compare.
-     * @return the maximum straight-line distance for any link endpoint.
-     */
+        /**
+         * Returns the maximum straight-line distance between the link endpoints
+         * in this state vs. the other state, or -1 if the link counts don't match.
+         * 
+         * @param otherState
+         *            the other state to compare.
+         * @return the maximum straight-line distance for any link endpoint.
+         */
     public double maxDistance(ArmConfig otherState) {
         if (this.getJointCount() != otherState.getJointCount()) {
             return -1;

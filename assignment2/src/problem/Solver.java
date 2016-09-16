@@ -82,6 +82,7 @@ public class Solver {
 
     public void sampleCustom(int samples) {
         sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
+        sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), false);
 
         ArrayList<ArmConfig> configList = sampler.getConfigList();
         configs = configList;
@@ -97,8 +98,8 @@ public class Solver {
     }
 
     public void sampleNearObstacles(int samples) {
-        sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
-        sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), false);
+        sampler.sampleCustomMethod(samples / 2, ps.getObstacles(), ps.getJointCount(), false);
+        sampler.sampleNearObstacles(samples / 2, ps.getObstacles(), ps.getJointCount(), false);
 
         ArrayList<ArmConfig> configList = sampler.getConfigList();
         configs = configList;
@@ -111,7 +112,6 @@ public class Solver {
         ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), goal);
 
         saveSolution(endPoint, "test_sol.txt");
-        
 
     }
 

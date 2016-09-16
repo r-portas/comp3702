@@ -85,6 +85,7 @@ public class Search {
         temp.visited = true;
         temp.expanded = true;
         queue.add(temp);
+        System.out.println(possibleSols);
 
         while (true) {
             System.out.println("Queue size: " + queue.size());
@@ -94,6 +95,7 @@ public class Search {
             }
 
             temp = queue.poll();
+            System.out.println("Testing: " + temp);
 
             if (!possibleSols.contains(temp)) {
                 continue;
@@ -125,8 +127,6 @@ public class Search {
                 
             }
 
-            // We don't add the old one back, since its not exactly required
-            
         }
 
     }
