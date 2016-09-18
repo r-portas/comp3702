@@ -57,7 +57,8 @@ public class Sampler {
 
         List<Double> joints = new ArrayList<Double>();
         for (int i = 0; i < 4; i++) {
-            joints.add((max - min) * rand.nextDouble() + min);
+            //joints.add((max - min) * rand.nextDouble() + min);
+            joints.add(min);
         }
         return joints;
     }
