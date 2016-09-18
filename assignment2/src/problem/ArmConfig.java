@@ -140,6 +140,10 @@ public class ArmConfig implements Comparable<ArmConfig>{
     public ArmConfig(ArmConfig cfg) {
         base = cfg.getBaseCenter();
         jointAngles = cfg.getJointAngles();
+        gripper = cfg.hasGripper();
+        if (gripper) {
+            gripperLengths = cfg.getGripperLengths();
+        }
         links = cfg.getLinks();
         chair = cfg.getChair();
     }
@@ -200,12 +204,10 @@ public class ArmConfig implements Comparable<ArmConfig>{
      * Moves the arm config towards the destination
      */
     public void moveTowards(ArmConfig dest) {
-
         moveChairToPosition(dest);
         moveJointsToPosition(dest);
         generateLinks();
         generateChair();
-
     }
 
     public void moveChairToPosition(ArmConfig dest) {
@@ -248,6 +250,20 @@ public class ArmConfig implements Comparable<ArmConfig>{
                 jointAngles.set(i, jointAngles.get(i) - Math.min(dist, Tester.MAX_JOINT_STEP));
             }
         }
+       
+        if (gripper) {
+            List<Double> otherGripper = dest.getGripperLengths();
+            for (int i = 0; i < otherGripper.size(); i++) {
+                double dist = gripperLengths.get(i) - otherGripper.get(i);
+                if (dist < 0) {
+                    // Its smaller
+                    gripperLengths.set(i, gripperLengths.get(i) + Math.min(dist * -1, Tester.MAX_GRIPPER_STEP));
+                } else {
+                    // Its larger
+                    gripperLengths.set(i, gripperLengths.get(i) - Math.min(dist, Tester.MAX_GRIPPER_STEP));
+                }
+            }
+        }
     }
 
     /**
@@ -279,23 +295,25 @@ public class ArmConfig implements Comparable<ArmConfig>{
      *
      * @return whether the arm has a gripper.
      */
-    public boolean hasGripper() { return gripper; }
+    public boolean hasGripper() { 
+        return gripper; 
+    }
 
     /**
      * Returns the list of gripper lengths.
      *
      * @return the list of gripper lengths.
      */
-        public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
+    public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
 
-        /**
-         * Returns the list of links as Line2D.
-         * 
-         * @return the list of links as Line2D.
-         */
-            public List<Line2D> getLinks() {
-                return new ArrayList<Line2D>(links);
-            }
+    /**
+     * Returns the list of links as Line2D.
+     * 
+     * @return the list of links as Line2D.
+     */
+    public List<Line2D> getLinks() {
+        return new ArrayList<Line2D>(links);
+    }
 
         /**
          * Returns the chair boundary as list of Line2D.

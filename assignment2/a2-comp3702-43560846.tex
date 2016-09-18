@@ -29,7 +29,9 @@
     \begin{itemize}
         \item Sampling Near Obstacles
         
-            This method is promising, since we are given all the obstacles at the start. Thus this sampling only needs to be done once. However since we are given the complete workspace, there are better choices for this problem.
+            This method is promising, since we are given all the obstacles at the start. Thus this sampling only needs to be done once. Furthermore, sampling near obstacles will reduce the number of nodes required and make the graph more sparse. 
+            A large distance between two nodes suggest that the space does not have a collision, so the algorithm can move the chair in a straight line towards the node.
+            Upon reaching a more dense section of the graph, the algorithm will use the nodes near obstacles to navigate around it.
 
         \item Sample Inside a Passage
 
@@ -37,10 +39,11 @@
 
         \item Using Workspace Information
 
-            This strategy also looks promising, as we are given the complete workspace. Thus a possible solution is to sample the workspace randomly to create a discrete grid. The grid can then be converted into a search graph using rapidly exploring random trees. Additionally supporting code which does the workspace collision checking is provided, this will save development time and thus this strategy was chosen.
+            This strategy also looks promising, as we are given the complete workspace. Thus a possible solution is to sample the workspace randomly to create a discrete grid. However this will create a lot of nodes, which will slow down the search algorithm.
+            Furthermore, this sampling strategy will create nodes in the empty spaces in the corners of the workspaces, these nodes are irrelevant and will only slow the search algorithm.
     \end{itemize}
 
-    The workspace sampling strategy was chosen as the code is already provided and will suit the problem at hand/
+    A combination of the Sampling Near Obstacles and 
 
     \subsection{Implementation}
 
@@ -52,13 +55,13 @@
 
         while samples.length < N:
             
-            x = Random configuration in the workspace
+            x = Random configuration near an obstacle
             if x is a valid configuration:
                 add x to samples
 
     \end{lstlisting}
 
-    The end result of this will be a list of valid configurations in the workspace. This list is later used to create a KDTree for searching.
+    The end result of this will be a list of valid configurations in the workspace.
 
     \section{What will cause the program to succeed}
 
@@ -66,5 +69,5 @@
 
     \section{What will cause the program to fail}
 
-    The program will fail if the number of samples is insufficient.
+    The program will fail if the number of samples is insufficient. Furthermore, since it depends on sampling near obstacles, if the obstacles are too close together the sampling will fail.
 \end{document}

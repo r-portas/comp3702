@@ -81,8 +81,18 @@ public class Solver {
     }
 
     public void sampleCustom(int samples) {
-        sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), false);
-        sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), false);
+        boolean gripper = ps.hasGripper();
+        //sampler.sampleCustomMethod(samples / 10, ps.getObstacles(), ps.getJointCount(), gripper);
+        sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampledFixedNearObstacles(samples / 2, 0, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampledFixedNearObstacles(samples / 2, 90, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampledFixedNearObstacles(samples / 2, 45, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampledFixedNearObstacles(samples / 2, -90, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampledFixedNearObstacles(samples / 2, -45, ps.getObstacles(), ps.getJointCount(), gripper);
+
+        //sampler.sampleFixedAngleMethod(samples / 10, 0, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampleFixedAngleMethod(samples / 10, 90, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampleFixedAngleMethod(samples / 10, -90, ps.getObstacles(), ps.getJointCount(), gripper);
 
         ArrayList<ArmConfig> configList = sampler.getConfigList();
         configs = configList;

@@ -178,6 +178,10 @@ public class ProblemSpec {
         output.close();
     }
 
+    public boolean hasGripper() {
+        return gripper;
+    }
+
     /**
      * Assumes that a path can be taken directly from the initial configuration
      * to the goal.

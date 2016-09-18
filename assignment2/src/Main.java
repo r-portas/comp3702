@@ -14,21 +14,18 @@ public class Main {
         solver = new Solver();
 
         try {
-            ps.loadProblem("inputEx/4_joints.txt");
+            ps.loadProblem("inputEx/joint_3-obs_15.txt");
 
             long start = System.currentTimeMillis();
 
             solver.loadProblemSpec(ps);
 
-            solver.sampleCustom(0);
+            solver.sampleCustom(600);
 
             long end = System.currentTimeMillis();
             long diff = end - start;
 
             System.out.println("Elapsed time: " + (diff / 1000));
-
-            //ps.assumeDirectSolution();
-            //ps.saveSolution("inputEx/1_sol.txt");
 
         } catch (Exception e) {
             System.out.println("Something bad happened :(");

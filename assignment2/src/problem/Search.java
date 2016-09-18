@@ -50,6 +50,14 @@ public class Search {
                 return null;
             }
 
+            if (!tester.fitsBounds(temp)) {
+                return null;
+            }
+
+            if (tester.hasSelfCollision(temp)) {
+                return null;
+            }
+
             temp.parent = last;
         }
 
@@ -74,6 +82,7 @@ public class Search {
 
         ArrayList<ArmConfig> possibleSols = new ArrayList<ArmConfig>();
         for (ArmConfig config : configs) {
+            config.setDistanceToGoal(ps.getGoalState());
             possibleSols.add(config);
         }
 
@@ -85,17 +94,23 @@ public class Search {
         temp.visited = true;
         temp.expanded = true;
         queue.add(temp);
-        System.out.println(possibleSols);
+
+        ArmConfig bestAttempt = ps.getInitialState();
 
         while (true) {
             System.out.println("Queue size: " + queue.size());
             System.out.println("Nodes remaining: " + possibleSols.size());
             if (queue.size() == 0) {
-                return null;
+                System.out.println("Failed, using best attempt");
+                System.out.println("Best attempt is " + bestAttempt.getDistanceToGoal() + " from the goal");
+                return bestAttempt;
             }
 
             temp = queue.poll();
-            System.out.println("Testing: " + temp);
+            System.out.println("Distance from goal: " + temp.getDistanceToGoal());
+            if (bestAttempt.getDistanceToGoal() > temp.getDistanceToGoal()) {
+                bestAttempt = temp;
+            }
 
             if (!possibleSols.contains(temp)) {
                 continue;
