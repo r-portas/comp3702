@@ -84,11 +84,6 @@ public class Solver {
         boolean gripper = ps.hasGripper();
         //sampler.sampleCustomMethod(samples / 10, ps.getObstacles(), ps.getJointCount(), gripper);
         sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), gripper);
-        //sampler.sampledFixedNearObstacles(samples / 2, 0, ps.getObstacles(), ps.getJointCount(), gripper);
-        //sampler.sampledFixedNearObstacles(samples / 2, 90, ps.getObstacles(), ps.getJointCount(), gripper);
-        //sampler.sampledFixedNearObstacles(samples / 2, 45, ps.getObstacles(), ps.getJointCount(), gripper);
-        //sampler.sampledFixedNearObstacles(samples / 2, -90, ps.getObstacles(), ps.getJointCount(), gripper);
-        //sampler.sampledFixedNearObstacles(samples / 2, -45, ps.getObstacles(), ps.getJointCount(), gripper);
 
         //sampler.sampleFixedAngleMethod(samples / 10, 0, ps.getObstacles(), ps.getJointCount(), gripper);
         //sampler.sampleFixedAngleMethod(samples / 10, 90, ps.getObstacles(), ps.getJointCount(), gripper);

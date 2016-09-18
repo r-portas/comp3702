@@ -43,30 +43,30 @@ public class Search {
             temp.moveTowards(end);
 
             if (!tester.isValidStep(temp, last)) {
-                return null;
+                return last;
             }
 
             if (tester.hasCollision(temp, ps.getObstacles())) {
-                return null;
+                return last;
             }
 
             if (!tester.fitsBounds(temp)) {
-                return null;
+                return last;
             }
 
             if (tester.hasSelfCollision(temp)) {
-                return null;
+                return last;
             }
 
             temp.parent = last;
         }
 
         if (!tester.isValidStep(temp, end)) {
-            return null;
+            return temp;
         }
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
-            return null;
+            return temp;
         }
 
         return temp;
@@ -121,6 +121,9 @@ public class Search {
             if (temp.getBaseCenter().equals(end.getBaseCenter())) {
                 // Returns the path
                 System.out.println("Found path!");
+
+                // Rotate the joints and grippers to be correct positions
+                // TODO
                 return temp;
             }
 
@@ -136,8 +139,8 @@ public class Search {
 
                 ArmConfig valid = checkValidPath(temp, dest);
                 if (valid != null) {
-                    dest.parent = valid;
-                    queue.add(dest);
+                    valid.setDistanceToGoal(ps.getGoalState());
+                    queue.add(valid);
                 }
                 
             }
