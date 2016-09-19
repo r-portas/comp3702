@@ -304,7 +304,12 @@ public class ArmConfig implements Comparable<ArmConfig>{
      *
      * @return the list of gripper lengths.
      */
-    public List<Double> getGripperLengths() { return new ArrayList<Double>(gripperLengths); }
+    public List<Double> getGripperLengths() { 
+        if (gripperLengths == null) {
+            return new ArrayList<Double>();
+        }
+
+        return new ArrayList<Double>(gripperLengths); }
 
     /**
      * Returns the list of links as Line2D.
@@ -312,6 +317,10 @@ public class ArmConfig implements Comparable<ArmConfig>{
      * @return the list of links as Line2D.
      */
     public List<Line2D> getLinks() {
+        if (links == null) {
+            return new ArrayList<Line2D>();
+        }
+
         return new ArrayList<Line2D>(links);
     }
 

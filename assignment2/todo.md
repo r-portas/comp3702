@@ -6,6 +6,7 @@
     - Once sampling is complete, sample different joint configurations on top of a single chair base
     - If the current node is not the destination, ignore the final joint check
 
+## TODO: Only generate primitive steps AFTER a solution is found
 
 ## Psuedo Algorithm
 ```

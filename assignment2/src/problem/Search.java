@@ -32,6 +32,50 @@ public class Search {
         }
     }
 
+    /**
+     * Gets the path between two points
+     */
+    public ArmConfig getValidPath(ArmConfig start, ArmConfig end) {
+        
+        ArmConfig temp = start;
+        ArmConfig last = start;
+
+        while (!temp.getBaseCenter().equals(end.getBaseCenter())) {
+            last = temp;
+            temp = new ArmConfig(last);
+            temp.moveTowards(end);
+
+            if (!tester.isValidStep(temp, last)) {
+                return last;
+            }
+
+            if (tester.hasCollision(temp, ps.getObstacles())) {
+                return last;
+            }
+
+            if (!tester.fitsBounds(temp)) {
+                return last;
+            }
+
+            if (tester.hasSelfCollision(temp)) {
+                return last;
+            }
+
+            temp.parent = last;
+        }
+
+        if (!tester.isValidStep(temp, end)) {
+            return temp;
+        }
+
+        if (tester.hasCollision(temp, ps.getObstacles())) {
+            return temp;
+        }
+
+        return temp;
+
+    }
+
     public ArmConfig checkValidPath(ArmConfig start, ArmConfig end) {
         
         ArmConfig temp = start;
@@ -71,6 +115,27 @@ public class Search {
 
         return temp;
 
+    }
+
+    public ArmConfig moveJointsToDest(ArmConfig start, ArmConfig dest) {
+        ArmConfig temp = new ArmConfig(start);
+        ArmConfig last = start;
+        temp.parent = last;
+
+        if (dest.getJointAngles().size() == 0) {
+            return temp;
+        }
+
+        while (!temp.getJointAngles().equals(dest.getJointAngles())) {
+            // Move the config to the destination
+            last = temp;
+            temp = new ArmConfig(last);
+            temp.parent = last;
+            temp.moveTowards(dest);
+            
+        }
+
+        return temp;
     }
 
     public ArmConfig runUCSearch(ArrayList<ArmConfig> configs, ArmConfig start, ArmConfig end) {
@@ -123,8 +188,7 @@ public class Search {
                 System.out.println("Found path!");
 
                 // Rotate the joints and grippers to be correct positions
-                // TODO
-                return temp;
+                return moveJointsToDest(temp, end);
             }
 
             // Remove the current point from the possible solutions
@@ -149,32 +213,4 @@ public class Search {
 
     }
 
-    public void BFS(KDTree tree, ArmConfig start, ArmConfig end) {
-        LinkedList<ArmConfig> queue = new LinkedList<ArmConfig>();
-        ArmConfig current = null;
-        ArmConfig nearby = null;
-
-        queue.add(start);
-
-        while (!queue.isEmpty()) {
-             current = queue.removeFirst();
-
-             if (current == end) {
-                // We found the goal, so quit
-                 
-                System.out.println("!!! Found solution");
-                
-                while ((current = current.parent) != null) {
-                    System.out.println(current);
-                }
-             }
-
-             while ((nearby = tree.nearest(current)) != null) {
-                nearby.visited = true;
-                nearby.parent = current;
-                queue.add(nearby);
-             }
-            
-        }
-    }
 }

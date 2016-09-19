@@ -16,7 +16,6 @@ public class Solver {
 
     private ProblemSpec ps;
     private Sampler sampler;
-    private KDTree kdTree;
     ArrayList<ArmConfig> configs;
     
     public Solver() {
@@ -49,35 +48,6 @@ public class Solver {
             System.out.println("An error occured saving the file");
             System.out.println(e);
         }
-    }
-
-    public void kdTest() {
-        kdTree = new KDTree();
-        Search search = new Search(ps);
-
-        ArmConfig start = new ArmConfig("0.1 0.1 0.2");
-        ArmConfig end = new ArmConfig("0.2 0.2 0.3");
-
-        ArmConfig res = search.checkValidPath(start, end);
-
-        if (res != null) {
-            
-            List<ArmConfig> path = new ArrayList<ArmConfig>();
-            while (res != null) {
-                path.add(res);
-                res = res.parent;
-            }
-           
-            ps.setPath(path);
-            try {
-                ps.saveSolution("inputEx/test_movement.txt");
-            } catch (Exception e) {
-                System.out.println("LOL");
-            }
-        } else {
-            System.out.println("Could not get valid path!");
-        }
-
     }
 
     public void sampleCustom(int samples) {
