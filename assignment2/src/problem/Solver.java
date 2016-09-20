@@ -43,6 +43,7 @@ public class Solver {
             ArmConfig valid = search.getValidPath(node.parent, node);
             while (valid != null) {
                 path.add(valid);
+
                 if (valid.equals(node.parent)) {
                     break;
                 }
@@ -71,7 +72,7 @@ public class Solver {
 
     public void sampleCustom(int samples) {
         boolean gripper = ps.hasGripper();
-        //sampler.sampleCustomMethod(samples / 10, ps.getObstacles(), ps.getJointCount(), gripper);
+        //sampler.sampleCustomMethod(samples, ps.getObstacles(), ps.getJointCount(), gripper);
         sampler.sampleNearObstacles(samples, ps.getObstacles(), ps.getJointCount(), gripper);
 
         //sampler.sampleFixedAngleMethod(samples / 10, 0, ps.getObstacles(), ps.getJointCount(), gripper);

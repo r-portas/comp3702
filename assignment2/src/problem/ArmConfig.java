@@ -290,6 +290,10 @@ public class ArmConfig implements Comparable<ArmConfig>{
         return new ArrayList<Double>(jointAngles);
     }
 
+    public void setJointAngles(List<Double> angles) {
+        jointAngles = new ArrayList<Double>(angles);
+    }
+
     /**
      * Returns whether the arm has a gripper.
      *

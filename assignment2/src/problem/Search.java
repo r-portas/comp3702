@@ -68,10 +68,8 @@ public class Search {
             temp.parent = last;
         }
 
-        if (!tester.isValidStep(temp, end)) {
-            return null;
-            //return temp;
-        }
+        // rotate joints
+        temp = moveJointsToDest(temp, end);
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
             return null;
@@ -112,9 +110,11 @@ public class Search {
             temp.parent = last;
         }
 
-        if (!tester.isValidStep(temp, end)) {
-            return false;
+        // rotate joints
+        if (moveJointsToDest(temp, end) == null) {
+            return false;   
         }
+
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
             return false;
@@ -139,6 +139,10 @@ public class Search {
             temp = new ArmConfig(last);
             temp.parent = last;
             temp.moveTowards(dest);
+
+            if (tester.hasCollision(temp, ps.getObstacles())) {
+                return null;
+            }
             
         }
 

@@ -62,12 +62,12 @@ public class VisualisationPanel extends JComponent {
     }
 
     public void runNearbySample() {
-        solver.sampleNearObstacles(20);
+        solver.sampleNearObstacles(1000);
         this.repaint();
     }
 
     public void runCustomSample() {
-        solver.sampleCustom(800);
+        solver.sampleCustom(1500);
         this.repaint();
     }
 
