@@ -42,34 +42,40 @@ public class Search {
 
         while (!temp.getBaseCenter().equals(end.getBaseCenter())) {
             last = temp;
-            temp = new ArmConfig(last);
+            temp = new ArmConfig(temp);
             temp.moveTowards(end);
 
             if (!tester.isValidStep(temp, last)) {
-                return last;
+                //return last;
+                return null;
             }
 
             if (tester.hasCollision(temp, ps.getObstacles())) {
-                return last;
+                return null;
+                //return last;
             }
 
             if (!tester.fitsBounds(temp)) {
-                return last;
+                return null;
+                //return last;
             }
 
             if (tester.hasSelfCollision(temp)) {
-                return last;
+                return null;
+                //return last;
             }
 
             temp.parent = last;
         }
 
         if (!tester.isValidStep(temp, end)) {
-            return temp;
+            return null;
+            //return temp;
         }
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
-            return temp;
+            return null;
+            //return temp;
         }
 
         return temp;

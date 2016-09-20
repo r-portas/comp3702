@@ -37,16 +37,25 @@ public class Solver {
     public void saveSolution(ArmConfig end, String filename) {
         List<ArmConfig> path = new ArrayList<ArmConfig>();
         // TODO: Fix this
-        while (end != null) {
-            if (end.parent != null) {
-                ArmConfig valid = search.getValidPath(end.parent, end);
-                while (valid != null) {
-                    path.add(valid);
+        ArmConfig node = end;
 
-                    valid = valid.parent;
+        while (node.parent != null) {
+            ArmConfig valid = search.getValidPath(node.parent, node);
+            while (valid != null) {
+                path.add(valid);
+                if (valid.equals(node.parent)) {
+                    break;
                 }
+                if (valid != null) {
+                    if (valid.parent == null) {
+                        System.out.println(valid);
+                    }
+                }
+                valid = valid.parent;
+
             }
-            end = end.parent;
+
+            node = node.parent;
         }
       
         Collections.reverse(path);

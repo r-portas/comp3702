@@ -43,7 +43,7 @@
             Furthermore, this sampling strategy will create nodes in the empty spaces in the corners of the workspaces, these nodes are irrelevant and will only slow the search algorithm.
     \end{itemize}
 
-    A combination of the Sampling Near Obstacles and 
+    The Sampling Near Obstacles was chosen because of the configuration of the workspace and the chair.
 
     \subsection{Implementation}
 
@@ -62,12 +62,22 @@
     \end{lstlisting}
 
     The end result of this will be a list of valid configurations in the workspace.
+    The algorithm will then calculate the distance from each sample to the destination use that information to sort the list of samples. Thus at the end we have a list of samples with the closest first.
+    
+    By having the closest samples first in the list, the algorithm will check these points for a solution first, which will provide a solution which is quicker to compute and, in theory, produce a more optimal solution.
+
+    Additionally a queue is created for running a BFS search through the nodes. The algorithm then iterates through the list looking for valid paths between the nodes. If a valid path is found, it will be added to the queue.
+    The program will continue to search through the queue until the destination is found. Once it is found, the algorithm will backtrace to find the solution. 
 
     \section{What will cause the program to succeed}
+
+    The algorithm is highly dependant on the sampling strategy, if the random distrubution of points is good, the algorithm is more likely to succeed.
 
     In theory as long as there is a number of valid configurations between the start and destination, the program will succeed. However the chances are increased if the number of samples is larger.
 
     \section{What will cause the program to fail}
 
     The program will fail if the number of samples is insufficient. Furthermore, since it depends on sampling near obstacles, if the obstacles are too close together the sampling will fail.
+
+    Additionally, if the workspace is extremely big it will take a long time to search through each node. Meaning the program will likely run out of memory before finishing.
 \end{document}
