@@ -76,44 +76,45 @@ public class Search {
 
     }
 
-    public ArmConfig checkValidPath(ArmConfig start, ArmConfig end) {
+    public boolean checkValidPath(ArmConfig start, ArmConfig end) {
         
         ArmConfig temp = start;
         ArmConfig last = start;
 
         while (!temp.getBaseCenter().equals(end.getBaseCenter())) {
             last = temp;
+            //TODO: Can this be removed?
             temp = new ArmConfig(last);
             temp.moveTowards(end);
 
             if (!tester.isValidStep(temp, last)) {
-                return last;
+                return false;
             }
 
             if (tester.hasCollision(temp, ps.getObstacles())) {
-                return last;
+                return false;
             }
 
             if (!tester.fitsBounds(temp)) {
-                return last;
+                return false;
             }
 
             if (tester.hasSelfCollision(temp)) {
-                return last;
+                return false;
             }
 
             temp.parent = last;
         }
 
         if (!tester.isValidStep(temp, end)) {
-            return temp;
+            return false;
         }
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
-            return temp;
+            return false;
         }
 
-        return temp;
+        return true;
 
     }
 
@@ -200,11 +201,9 @@ public class Search {
                     continue;
                 }
 
-
-                ArmConfig valid = checkValidPath(temp, dest);
-                if (valid != null) {
-                    valid.setDistanceToGoal(ps.getGoalState());
-                    queue.add(valid);
+                if (checkValidPath(temp, dest)) {
+                    dest.parent = temp;
+                    queue.add(dest);
                 }
                 
             }

@@ -16,6 +16,7 @@ public class Solver {
 
     private ProblemSpec ps;
     private Sampler sampler;
+    private Search search;
     ArrayList<ArmConfig> configs;
     
     public Solver() {
@@ -30,12 +31,21 @@ public class Solver {
         // Load up the sampler
         sampler = new Sampler(this.ps);
         configs = new ArrayList<ArmConfig>();
+        search = new Search(ps);
     }
 
     public void saveSolution(ArmConfig end, String filename) {
         List<ArmConfig> path = new ArrayList<ArmConfig>();
+        // TODO: Fix this
         while (end != null) {
-            path.add(end);
+            if (end.parent != null) {
+                ArmConfig valid = search.getValidPath(end.parent, end);
+                while (valid != null) {
+                    path.add(valid);
+
+                    valid = valid.parent;
+                }
+            }
             end = end.parent;
         }
       
@@ -82,7 +92,6 @@ public class Solver {
         ArmConfig goal = ps.getGoalState();
         goal.setDistanceToGoal(goal);
 
-        Search search = new Search(ps);
 
         ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), goal);
 
