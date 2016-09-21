@@ -13,14 +13,21 @@ public class Main {
         ProblemSpec ps = new ProblemSpec();
         solver = new Solver();
 
+        if (args.length != 2) {
+            System.out.println("Invalid arguments, expected <in-file> <out-file>");
+            return;
+        }
+
+
         try {
-            ps.loadProblem("inputEx/joint_3-obs_15.txt");
+            ps.loadProblem(args[0]);
 
             long start = System.currentTimeMillis();
 
             solver.loadProblemSpec(ps);
+            solver.setFilename(args[1]);
 
-            solver.sampleCustom(600);
+            solver.sampleCustom(2000);
 
             long end = System.currentTimeMillis();
             long diff = end - start;

@@ -17,9 +17,15 @@ public class Solver {
     private ProblemSpec ps;
     private Sampler sampler;
     private Search search;
+    private String filename;
     ArrayList<ArmConfig> configs;
     
     public Solver() {
+        filename = "test_sol.txt";
+    }
+
+    public void setFilename(String fname) {
+        filename = fname;
     }
 
     /**
@@ -89,7 +95,7 @@ public class Solver {
 
         ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), goal);
 
-        saveSolution(endPoint, "test_sol.txt");
+        saveSolution(endPoint, filename);
     }
 
     public void sampleNearObstacles(int samples) {
@@ -105,7 +111,7 @@ public class Solver {
 
         ArmConfig endPoint = search.runUCSearch(configList, ps.getInitialState(), goal);
 
-        saveSolution(endPoint, "test_sol.txt");
+        saveSolution(endPoint, filename);
 
     }
 

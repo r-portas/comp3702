@@ -70,6 +70,7 @@ public class Search {
 
         // rotate joints
         temp = moveJointsToDest(temp, end);
+        temp = moveGrippersToDest(temp, end);
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
             return null;
@@ -115,6 +116,11 @@ public class Search {
             return false;   
         }
 
+        // rotate the grippers
+        if (moveGrippersToDest(temp, end) == null) {
+            return false;
+        }
+
 
         if (tester.hasCollision(temp, ps.getObstacles())) {
             return false;
@@ -122,6 +128,31 @@ public class Search {
 
         return true;
 
+    }
+
+    public ArmConfig moveGrippersToDest(ArmConfig start, ArmConfig dest) {
+        ArmConfig temp = new ArmConfig(start);
+        ArmConfig last = start;
+        temp.parent = last;
+
+        if (!dest.hasGripper()) {
+            return temp;
+        }
+
+        while (!temp.getGripperLengths().equals(dest.getGripperLengths())) {
+            // Move the config to the destination
+            last = temp;
+            temp = new ArmConfig(last);
+            temp.parent = last;
+            temp.moveTowards(dest);
+
+            if (tester.hasCollision(temp, ps.getObstacles())) {
+                return null;
+            }
+            
+        }
+
+        return temp;
     }
 
     public ArmConfig moveJointsToDest(ArmConfig start, ArmConfig dest) {
