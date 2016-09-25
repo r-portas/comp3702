@@ -74,3 +74,35 @@
     - The state contains the sentence we are trying to prove
    
   This is sound but may not complete. It depends on whether we can provide a complete list of inference rules.
+
+## Theorem Proving - Natural Deduction using Search
+
+- __State space__: All possible set of sentences
+- __Action space__: All inference rules
+- __World dynamics__: Apply the inference rule to all sentences that match the above the line part of the inference rule. Become the sentence that lies below the line of the inference rule.
+- __Initial state__: Initial knowledge base
+- __Goal state__: The state contains the sentence we're trying to prove
+
+_Notes_: Natural deduction is sound but may not be complete, depends on wwhether we can provide a complete list of inference rules. When we can, the branching factor can be very high.
+
+## Conjunctive Normal Form (CNF)
+- Conjunctions of disjunctions
+- Example: `(~A | B) & (C | D) & (E | F)`
+- Terminologies
+    - Clause: A disjunction of literals, e.g. `(~A | B)`
+    - Literals: Variables or the negation of variables, e.g. `~A` and `B`
+- Three steps to converting propositional logic to CNF
+    - Eliminate arrows using definitions
+    - Drive in negations using De Morgan's laws
+    - Distribute OR over AND
+- Theorem Proving
+    - Three steps
+        - Convert all sentences into CNF
+        - Negate the desired conclusion
+        - Apply resolution rule until
+            - Derive false (a contradiction)
+            - Can't apply the rule anymore
+
+## Satisfiability Problems
+- Is a given sentence satisfiable
+    - There is at least one interpretation that makes the sentence to be True
