@@ -129,7 +129,6 @@ _Notes_: Natural deduction is sound but may not be complete, depends on wwhether
     - Pick a variable v
         - If DPLL(S(v)) then return true, else return DPLL(S(~v))
         - Heuristic to pick the variable: Max #occurences, Min size clauses
-
 - Sound
 - Complete
 - Speed and memory consumption depend a lot on:
