@@ -106,3 +106,54 @@ _Notes_: Natural deduction is sound but may not be complete, depends on wwhether
 ## Satisfiability Problems
 - Is a given sentence satisfiable
     - There is at least one interpretation that makes the sentence to be True
+- Various applications
+    - Many problems can be phrased as a list of constraints, and a solution is an assignment that satisfies all constraints
+- Satisfiability for propositional logic is a particular type of Constraint Satisfication Problem (CSP)
+
+## Model Checking for Satisfiability Problem (SAT Solvers)
+- Assign and simplify strategy
+     - Consider a search tree where at each level we consider the possible assignments to one variable, say V
+     - On one branch, we assume V is False and on the other we assume True
+     - Given an assignment for a variable, we can simplify the sentence and then repeat the process for another variable
+- Random assignment of all variables in the sentence
+
+## Davis Putnam Logeman Loveland (DPLL)
+- DPLL (Sentence S)
+    - If S is empty, return True
+    - If S has an empty clause, return False
+    - IF S has a unit clause U, return DPLL(S(U))
+        - Unit clause: Consists of only 1 literal
+        - S(U) means a simplified S after a value is assigned to U
+    - If S has a pure clause U, DPLL(S(U))
+        - Pure clause: Appear as positive only or negative only in S
+    - Pick a variable v
+        - If DPLL(S(v)) then return true, else return DPLL(S(~v))
+        - Heuristic to pick the variable: Max #occurences, Min size clauses
+
+- Sound
+- Complete
+- Speed and memory consumption depend a lot on:
+    - Which symbol is being assigned first
+    - Which assignment is being followed first
+    - A lot of methods have been proposed
+
+## GSAT
+- GSAT(Sentence S)
+    - Loop n times
+        - Randomly choose assignment for all variables, say A
+        - Loop m times
+            - Flip the variable that results in lowest cost, Cost(assignment) = number of unsatisfied clauses
+            - Return True if cost is zero
+
+- Sound but not complete
+- Cannot be used to generate all satisfiable assignment
+
+## DPLL vs GSAT
+- Weakly constrained problems (large proportion of the assignments is satisfiable)
+    - Easy for DPLL, Easy for GSAT
+- Highly constrained problems (very few satisfiable assignments, sometimes only 1)
+    - Easy for DPLL, Hard for GSAT
+- Problems in the middle
+    - Hard for DPLL, Hard for GSAT
+
+
