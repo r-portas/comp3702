@@ -155,4 +155,44 @@ Expected Utility if we buy the car:
 ### St. Petersburg Paradox
 - Flip a coin
     - Each flip costs
-    - Heads -> I'll pay
+    - Heads -> I'll pay you $2
+    - Tails -> Flip again
+        - Heads -> I'll pay you $8
+        - Tails -> Flip again
+
+Paradox: Expected value = infinite, but most people don't want to pay > $4 to play it
+
+### Utility of Money
+- Is decision theory useless here?
+    - It can still be used, as long as the 6 axioms for preferences are satisfied
+    - It's just that the utility function is not equals to the nominal value of the money
+    - Need to find the right utility function
+
+### Decision Tree Representation
+- Similar to a game tree and AND/OR tree
+- OR/max -> Choice: Agent makes the choice
+- AND/min -> Lottery: Represents the lottery that corresponds to the outcome of the decision made at its parent's node
+    - Often called chance node
+    - Computes expected value
+
+### Buying a used car
+- Goal of buying the car: To gain profit from reselling it
+- Costs $1000
+- Can sell the car for $1100 -> $100 profit
+- Every car is either good or bar
+    - Costs $40 to repair a good car
+    - Costs $200 to repair a bad car
+- 20% of cars are bad
+- Should we buy the car?
+
+### Guarantee
+- Costs $60
+- If repairs <= $100, covers 50% of repair costs
+- If repairs > $100, covers all
+
+### Inspection
+- Inspection checks if a car is good or bad
+- Costs $9
+- Not perfect:
+    - P(pass | good) = 0.9, P(fail | good) = 0.1
+    - P(pass | bad) = 0.4, P(fail | bad) = 0.6
