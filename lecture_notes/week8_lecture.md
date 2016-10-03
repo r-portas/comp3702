@@ -31,13 +31,14 @@
     - A: {Left, Right, Down, Up}
     - T:
 
-| Right from cell 7      |
-| P(8 | 7, right) = 0.7  |
-| P(4 | 7, right) = 0.1  |
-| P(12 | 7, right) = 0.1 |
-| P(3 | 7, right) = 0    |
-| P(11 | 7, right) = 0   |
-| P(7 | 7, right) = 0.1  |
+| Right from cell 7       |
+| ----------------------- |
+| P(8 \| 7, right) = 0.7  |
+| P(4 \| 7, right) = 0.1  |
+| P(12 \| 7, right) = 0.1 |
+| P(3 \| 7, right) = 0    |
+| P(11 \| 7, right) = 0   |
+| P(7 \| 7, right) = 0.1  |
 
 P(8 | 7, right) = Probability of reaching 8, given starting cell at 7 and moving right
 
