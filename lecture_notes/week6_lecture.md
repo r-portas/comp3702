@@ -104,4 +104,12 @@
 
 ![Evaluation function](resources/evaluation_function.png)
 
+- Features may include:
+    - Number of pieces of each type
+    - Number of possible moves
+    - Number of squares controlled
 
+### Example: Tic Tac Toe
+- e(s) = (number of rows, columns and diagonals where MAX can win) - (number of rows, columns and diagonals where MIN can win)
+- Agent (MAX): cross
+- 
