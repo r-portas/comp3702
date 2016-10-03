@@ -101,3 +101,7 @@
 
 ## Construction of an Evaluation Function
 - Usually a weighted sum of "features"
+
+![Evaluation function](resources/evaluation_function.png)
+
+
