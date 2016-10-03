@@ -44,9 +44,9 @@ P(8 | 7, right) = Probability of reaching 8, given starting cell at 7 and moving
 
 Note: The above is only for a single move from a cell, the actual transition function would look like more of a 2d matrix
 
-    - R:
-        - R(1) = 
-        - R(2) = 
-        - R(4) = +1
-        - R(8) = -1
-        ...
+- R:
+    - R(1) = 
+    - R(2) = 
+    - R(4) = +1
+    - R(8) = -1
+    ...
