@@ -59,7 +59,7 @@ Note: The above is only for a single move from a cell, the actual transition fun
 
 ## Using a Policy
 1. Starts from the initial state
-2. Move accoring to the policy
+2. Move according to the policy
 3. The agent moves to a new state
     - The new state the agent ends up may be different in different runs
 4. Repeat from 2 until criteria is satisfied (e.g. goal is reached)
