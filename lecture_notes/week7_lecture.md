@@ -68,8 +68,8 @@ Psuedo-code:
 State space: {good car, bad car}
 
 Utility function:
-    - `U(good car) = 1100 - 1000 - 40 = 60`
-    - `U(bad car) = 1100 - 1000 - 200 = -100`
+- `U(good car) = 1100 - 1000 - 40 = 60`
+- `U(bad car) = 1100 - 1000 - 200 = -100`
     
 Lottery: [0.8 for good car, 0.2 for bad car]
 
