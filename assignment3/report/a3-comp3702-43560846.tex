@@ -6,6 +6,7 @@
 \usepackage{graphicx}
 \usepackage{geometry}
 \usepackage{listings}
+\usepackage{verbatim}
 \geometry{
     a4paper,
     margin=1in
@@ -17,13 +18,36 @@
     \section{Problem Definition}
 
     \subsection{State Space}
-    The state space will be a set of integers from 0 to the maximum number of items the shop can stock, thus for a tiny store it will be $\left\{0, 1, 2, 3\right\}$.
+    The state space will be a set of tuples of integers from 0 to the maximum number of items the shop can stock. The size of the tuple is the number of items a shop can stock. 
+    Thus for a tiny store it will be $\left\{(0, 0), (0, 1), (1, 0), \ldots, (3, 3)\right\}$.
 
     \subsection{Action Space}
-    The action space will be the set of actions that can be performed on an item type, thus Ordering, Returning and Holding (doing nothing) items. Thus the action space will be $\left\{Ordering, Returning, Holding\right\}$
+    The actions space will be the set of all actions that can be performed by the customers. 
+    Thus for a tiny store, it will look like the following:
+
+    \begin{verbatim}
+        {
+            buy 0 of item 1,
+            buy 1 of item 1,
+            ...,
+            buy 2 of item 2,
+            buy 3 of item 2
+        }
+    \end{verbatim}
 
     \subsection{Transition Function}
     The transition function will be a matrix for each item type where the rows and columns are the number of items the store stocks.
+
+    \begin{center}
+        \begin{tabular} {|c|c|c|c|}
+            \hline
+            Item 1 & (0, 0) & (0, 1) & (1, 0) \\
+            \hline
+            (0, 0) & 0.2    & 0.3    & 0.1 \\
+            (0, 1) & 0.2    & 0.3    & 0.1\\
+            \hline
+        \end{tabular}
+    \end{center}
 
     \subsection{Reward Function}
 
