@@ -66,10 +66,13 @@ Psuedo-code:
 - 20% of cars are bad
 
 State space: {good car, bad car}
+
 Utility function:
-    - `U(good car) = 1100 - 1000 - 40 = 60`
-    - `U(bad car) = 1100 - 1000 - 200 = -100`
+- `U(good car) = 1100 - 1000 - 40 = 60`
+- `U(bad car) = 1100 - 1000 - 200 = -100`
+    
 Lottery: [0.8 for good car, 0.2 for bad car]
+
 Expected Utility if we buy the car:
     - `P(good car) * U(good car) + P(bad car) * U(bad car)`
     - `0.8 * 60 + 0.2 * -100 = 28`
