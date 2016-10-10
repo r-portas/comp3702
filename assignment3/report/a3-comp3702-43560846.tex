@@ -1,0 +1,30 @@
+\title{COMP3702 - Assignment 3}
+\author{Roy Portas - 43560846}
+\date{\today}
+
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{listings}
+\geometry{
+    a4paper,
+    margin=1in
+}
+
+\begin{document}
+    \maketitle
+
+    \section{Problem Definition}
+
+    \subsection{State Space}
+    The state space will be a set of integers from 0 to the maximum number of items the shop can stock, thus for a tiny store it will be $\left\{0, 1, 2, 3\right\}$.
+
+    \subsection{Action Space}
+    The action space will be the set of actions that can be performed on an item type, thus Ordering, Returning and Holding (doing nothing) items. Thus the action space will be $\left\{Ordering, Returning, Holding\right\}$
+
+    \subsection{Transition Function}
+    The transition function will be a matrix for each item type where the rows and columns are the number of items the store stocks.
+
+    \subsection{Reward Function}
+
+\end{document}

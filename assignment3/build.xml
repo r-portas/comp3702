@@ -1,0 +1,38 @@
+<!-- Assignment 3 - COMP3702 - Roy Portas -->
+
+<project name="a3-comp3702-43560846" default="dist" basedir=".">
+    
+    <property name="src" location="src" />
+    <property name="build" location="build" />
+    <property name="dist" location="dist" />
+
+    <target name="init">
+        <mkdir dir="${build}" />
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build}" />
+    </target>
+
+    <target name="run" depends="dist">
+        <java jar="dist/lib/a3-comp3702-43560846.jar" fork="true">
+        </java>
+    </target>
+
+    <!-- Build the main program -->
+    <target name="dist" depends="compile">
+        <mkdir dir="${dist}/lib" />
+
+        <jar jarfile="${dist}/lib/a3-comp3702-43560846.jar" basedir="${build}" >
+            <manifest>
+                <attribute name="Main-Class" value="Main" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build}" />
+        <delete dir="${dist}" />
+    </target>
+
+</project>
