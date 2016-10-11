@@ -81,9 +81,29 @@
         V_{\pi}(s) = R(s, \pi(s)) + d\sum_{s'}T(s, \pi{s}, s') V_{\pi}(s')
     \end{align*}
 
+    \subsubsection{Calculating the value function}
+
+    \begin{align*}
+        (I - dP)v &= r\\
+        v &= (I - dP)^{-1} r
+    \end{align*}
+
+    Where:
+    \begin{verbatim}
+        I: Identity matrix
+        d: Discount factor
+        P: Probability matrix
+        v: Value matrix, what we want to find
+        r: Reward matrix
+    \end{verbatim}
+
     \section{Algorithm Description}
 
     \subsection{Policy}
+
+    \subsection{Online Method}
+
+    \subsection{Offline Method}
 
 
 \end{document}
