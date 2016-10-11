@@ -4,6 +4,7 @@
 
 \documentclass[12pt]{article}
 \usepackage{graphicx}
+\usepackage{amsmath}
 \usepackage{geometry}
 \usepackage{listings}
 \usepackage{verbatim}
@@ -36,6 +37,13 @@
     \end{verbatim}
 
     \subsection{Transition Function}
+
+    The transitions of items are indepedant from each other, meaning that buying one item type does not influence the probability of buying another item type. Thus the transition function for a tiny store can be represented as follows:
+
+    \begin{align*}
+        T((i_1, i_2), (t_1, t_2), i_1', i_2') = T_{i_1}(i_1, t_1, i_1) \cdot T_{i_2}(i_2, t_2, i_2)
+    \end{align*}
+
     The transition function will be a matrix for each item type where the rows and columns are the number of items the store stocks.
 
     \begin{center}
@@ -49,6 +57,33 @@
         \end{tabular}
     \end{center}
 
+    In this table, the rows represent the current state and the columns represent the next state.
+
     \subsection{Reward Function}
+
+    The reward function will be the net profit made by the store after performing an action. As with the transition function, the reward for one item type is independant to the reward of other item types.
+
+    \subsection{Discount Factor}
+
+    The discount factor is given in the input file.
+
+    \subsection{Value Function}
+
+    A value function associates a state with the value, or 'worth' of being in that state.
+
+    \begin{align*}
+        V_{\pi}(s) = \sum_{s'} T(s, \pi(s), s') \big[ R(s, \pi(s) s') + dV_{\pi}(s') \big]
+    \end{align*}
+
+    However since the reward is independant from the next state, the reward function can be represented as $R(s, a)$, yielding:
+
+    \begin{align*}
+        V_{\pi}(s) = R(s, \pi(s)) + d\sum_{s'}T(s, \pi{s}, s') V_{\pi}(s')
+    \end{align*}
+
+    \section{Algorithm Description}
+
+    \subsection{Policy}
+
 
 \end{document}
