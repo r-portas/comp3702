@@ -16,6 +16,8 @@
 
     <target name="run" depends="dist">
         <java jar="dist/lib/a3-comp3702-43560846.jar" fork="true">
+            <arg value="${arg0}"/>
+            <arg value="${arg1}"/>
         </java>
     </target>
 
@@ -25,7 +27,7 @@
 
         <jar jarfile="${dist}/lib/a3-comp3702-43560846.jar" basedir="${build}" >
             <manifest>
-                <attribute name="Main-Class" value="Main" />
+                <attribute name="Main-Class" value="solver.Runner" />
             </manifest>
         </jar>
     </target>
