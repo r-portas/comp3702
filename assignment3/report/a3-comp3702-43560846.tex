@@ -20,7 +20,7 @@
 
     \subsection{State Space}
     The state space will be a set of tuples of integers from 0 to the maximum number of items the shop can stock. The size of the tuple is the number of items a shop can stock. 
-    Thus for a tiny store it will be $\left\{(0, 0), (0, 1), (1, 0), \ldots, (3, 3)\right\}$.
+    Thus for a tiny store it will be $\left\{(0, 0), (0, 1), (1, 0), \ldots, (3, 0), (0, 3)\right\}$. Note the sum of the elements in the tuple must be less than or equal to the number of items a store can stock.
 
     \subsection{Action Space}
     The actions space will be the set of all actions that can be performed by the customers. 
@@ -28,13 +28,15 @@
 
     \begin{verbatim}
         {
-            buy 0 of item 1,
-            buy 1 of item 1,
+            (buy 0 of item 1, buy 0 of item 2),
+            (buy 1 of item 1, buy 0 of item 2),
             ...,
-            buy 2 of item 2,
-            buy 3 of item 2
+            (buy 2 of item 1, buy 1 of item 2),
+            (buy 3 of item 1, buy 0 of item 2)
         }
     \end{verbatim}
+
+    Note that returning an item is represented as buying a negative number of items.
 
     \subsection{Transition Function}
 
@@ -47,17 +49,41 @@
     The transition function will be a matrix for each item type where the rows and columns are the number of items the store stocks.
 
     \begin{center}
-        \begin{tabular} {|c|c|c|c|}
+        \begin{tabular} {|c|c|c|c|c|}
             \hline
-            Item 1 & (0, 0) & (0, 1) & (1, 0) \\
+            Item 1 & 0 & 1 & 2 & 3 \\
             \hline
-            (0, 0) & 0.2    & 0.3    & 0.1 \\
-            (0, 1) & 0.2    & 0.3    & 0.1\\
+            0 & 0.2    & 0.3    & 0.2    & 0.3 \\
+            1 & 0.4    & 0.1    & 0.2    & 0.3 \\
+            2 & 0.1    & 0.5    & 0.2    & 0.2 \\
+            3 & 0      & 0.8    & 0.2    & 0   \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    \begin{center}
+        \begin{tabular} {|c|c|c|c|c|}
+            \hline
+            Item 2 & 0 & 1 & 2 & 3 \\
+            \hline
+            0 & 0.4    & 0.1    & 0.2    & 0.3 \\
+            1 & 0.2    & 0.3    & 0.2    & 0.3 \\
+            2 & 0.1    & 0.5    & 0.2    & 0.2 \\
+            3 & 0.1    & 0.9  & 0    & 0       \\
             \hline
         \end{tabular}
     \end{center}
 
     In this table, the rows represent the current state and the columns represent the next state.
+
+    \subsubsection{Implementation Note}
+
+    Create a array of tuples of possible solutions, then run each possibility through the transition function to find the average number of items bought. 
+    Add checking to ensure customers can't buy more items than the stores contains.
+
+    Create a class that represents this matrix, ensure that the states are continous, i.e. not discrete (to factor in for returns?). 
+    
+    Create function to get the bounds of the matrix.
 
     \subsection{Reward Function}
 
@@ -83,25 +109,35 @@
 
     \subsubsection{Calculating the value function}
 
-    \begin{align*}
-        (I - dP)v &= r\\
-        v &= (I - dP)^{-1} r
-    \end{align*}
-
-    Where:
     \begin{verbatim}
-        I: Identity matrix
-        d: Discount factor
-        P: Probability matrix
-        v: Value matrix, what we want to find
-        r: Reward matrix
+        def value(action):
+            # Calculate the expected number of items sold
+            prob = action * transition
+
+            # Calculate the net value of the transactions
+            value = prob * item_prices
     \end{verbatim}
+
+    Where action is the tuple containing the the number of items.
 
     \section{Algorithm Description}
 
-    \subsection{Policy}
+    \subsection{General Explanation}
+    \begin{enumerate}
+        \item Generate every possible action the customer can take and put it into an array
+        \item Run each array through the value function (transition function?) to calculate the profit for the action
+        \item Depending on if online or offline, continue building the tree
+    \end{enumerate}
+
+    \begin{itemize}
+        \item Policy, we are using the Monte Carlo tree to create the policy?
+        \item Monte Carlo Tree, edges will be actions and nodes will be profit value
+        \item Choose the best node and set that as the root
+    \end{itemize}
 
     \subsection{Online Method}
+
+    Look one step into the Monte Carlo Tree and choose the best result.
 
     \subsection{Offline Method}
 
