@@ -36,6 +36,7 @@ public class OnlineSolver implements OrderingAgent {
         // Create a new stock item
         currentStock = new Stock(stockInventory, spec.getPrices());
         System.out.println("Current items: " + currentStock.getTotalItems());
+        currentStock.calculateProfit(probabilities);
 
         getPossibleSolutions(stockInventory);
 
@@ -74,6 +75,7 @@ public class OnlineSolver implements OrderingAgent {
                                     items.add(b);
 
                                     Stock s = currentStock.add(items);
+                                    s.calculateProfit(probabilities);
                                     possibleSols.add(s);
                                     System.out.println(s.toString());
 

@@ -14,8 +14,14 @@ public class Stock {
     /** The cost of completing an order */
     private double cost;
 
+    /** The total profit from an order */
+    private double profit;
+
     /** Stores a list of prices */
     private List<Double> prices;
+
+    /** Enable verbose logging */
+    private boolean verbose = false;
 
     public Stock(List<Integer> current, List<Double> prices) {
         this.inventory = new ArrayList<Integer>(current);
@@ -27,8 +33,59 @@ public class Stock {
         return cost;
     }
 
+    public double getProfit() {
+        return profit;
+    }
+
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public void calculateProfit(List<Matrix> probMatrixes) {
+
+        double potentialProfit = 0;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            Matrix p = probMatrixes.get(i);
+            int items = inventory.get(i);
+            double itemPrice = prices.get(i);
+
+            List<Double> pRow = p.getRow(items);
+            
+            if (verbose) {
+                System.out.println("Calculating probability for item " + i);
+                System.out.println("Items: " + items + ", Item Price: " + itemPrice);
+                System.out.println(pRow);
+            }
+
+            for (int itemsBought = 0; itemsBought < pRow.size(); itemsBought++) {
+                double probability = pRow.get(itemsBought);
+
+
+                if (itemsBought <= items) {
+                    // Its a profit
+                    potentialProfit += itemsBought * itemPrice * probability * 0.75;
+
+                    if (verbose) {
+                        System.out.println("(ItemsBought: " + itemsBought + ", Profit: " + (itemsBought * itemPrice * probability * 0.75) + ")");
+                    }
+                } else {
+                    // Its a loss 
+                    potentialProfit -= itemsBought * itemPrice * probability * 0.25;
+
+                    if (verbose) {
+                        System.out.println("(ItemsBought: " + itemsBought + ", Profit: " + (-itemsBought * itemPrice * probability * 0.25) + ")");
+                    }
+                }
+            }
+        }
+
+
+        // Calculate the profit
+        profit = potentialProfit - cost;
+        if (verbose) {
+            System.out.println("Profit: " + profit);
+        }
     }
 
     public List<Integer> getInventory() {
@@ -85,8 +142,8 @@ public class Stock {
             out += inventory.get(i);
         }
 
-        out += "}, cost = ";
-        out += cost;
+        out += "}, profit = ";
+        out += profit;
         out += ")";
 
         return out;
