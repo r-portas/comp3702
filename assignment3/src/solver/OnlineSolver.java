@@ -56,6 +56,8 @@ public class OnlineSolver implements OrderingAgent {
 
         // Create Order instances
         switch (store.getMaxTypes()) {
+
+            // Tiny and Small stores
             case 2:
                 // Iterate through every possibility
                 for (int a = -store.getMaxReturns(); a < store.getMaxPurchase(); a++) {
@@ -72,12 +74,12 @@ public class OnlineSolver implements OrderingAgent {
                                     items.add(b);
 
                                     Stock s = currentStock.add(items);
+                                    possibleSols.add(s);
                                     System.out.println(s.toString());
 
                                 }
                             }
                         }
-                        // Have every combination of a and b 
                     }
                 }
                 break;
