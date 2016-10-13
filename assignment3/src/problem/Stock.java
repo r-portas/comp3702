@@ -76,7 +76,7 @@ public class Stock {
     }
 
     public String toString() {
-        String out = "Order(";
+        String out = "Stock(inv = {";
 
         out += inventory.get(0);
 
@@ -85,8 +85,9 @@ public class Stock {
             out += inventory.get(i);
         }
 
-        out += ") Cost: ";
+        out += "}, cost = ";
         out += cost;
+        out += ")";
 
         return out;
     }
