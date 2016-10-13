@@ -7,14 +7,15 @@ import java.util.List;
 import problem.Store;
 import problem.Matrix;
 import problem.ProblemSpec;
+import problem.Order;
 
-public class MySolver implements OrderingAgent {
+public class OnlineSolver implements OrderingAgent {
 
     private ProblemSpec spec = new ProblemSpec();
     private Store store;
     private List<Matrix> probabilities;
 
-    public MySolver(ProblemSpec spec) throws IOException {
+    public OnlineSolver(ProblemSpec spec) throws IOException {
         this.spec = spec;
         store = spec.getStore();
         probabilities = spec.getProbabilities();
@@ -57,6 +58,15 @@ public class MySolver implements OrderingAgent {
         }
 
         return order;
+    }
+
+    private List<Order> getPossibleSolutions(List<Integer> stockInventory) {
+        List<Order> possibleSols = new ArrayList<Order>();
+
+        // Create Order instances
+
+        // Calculate the possibilities if the store buys items
+        return possibleSols;
     }
 
 }

@@ -8,13 +8,13 @@ import problem.Store;
 import problem.Matrix;
 import problem.ProblemSpec;
 
-public class MySolver implements OrderingAgent {
+public class OfflineSolver implements OrderingAgent {
 
     private ProblemSpec spec = new ProblemSpec();
     private Store store;
     private List<Matrix> probabilities;
 
-    public MySolver(ProblemSpec spec) throws IOException {
+    public OfflineSolver(ProblemSpec spec) throws IOException {
         this.spec = spec;
         store = spec.getStore();
         probabilities = spec.getProbabilities();
