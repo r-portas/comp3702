@@ -7,13 +7,15 @@ import java.util.List;
 import problem.Store;
 import problem.Matrix;
 import problem.ProblemSpec;
-import problem.Order;
+import problem.Stock;
 
 public class OnlineSolver implements OrderingAgent {
 
     private ProblemSpec spec = new ProblemSpec();
     private Store store;
     private List<Matrix> probabilities;
+
+    private Stock currentStock;
 
     public OnlineSolver(ProblemSpec spec) throws IOException {
         this.spec = spec;
@@ -31,25 +33,11 @@ public class OnlineSolver implements OrderingAgent {
         List<Integer> itemOrders = new ArrayList<Integer>();
         List<Integer> itemReturns = new ArrayList<Integer>();
 
+        // Create a new stock item
+        currentStock = new Stock(stockInventory, spec.getPrices());
+        System.out.println("Current items: " + currentStock.getTotalItems());
 
-        int totalItems = 0;
-        for (int i : stockInventory) {
-            totalItems += i;
-        }
-
-        int totalOrder = 0;
-        for (int i = 0; i < store.getMaxTypes(); i++) {
-            if (totalItems >= store.getCapacity() ||
-                    totalOrder >= store.getMaxPurchase()) {
-                itemOrders.add(0);
-            } else {
-                itemOrders.add(1);
-                totalOrder ++;
-                totalItems ++;
-            }
-            itemReturns.add(0);
-        }
-
+        getPossibleSolutions(stockInventory);
 
         // combine orders and returns to get change for each item type
         List<Integer> order = new ArrayList<Integer>(itemOrders.size());
@@ -60,10 +48,41 @@ public class OnlineSolver implements OrderingAgent {
         return order;
     }
 
-    private List<Order> getPossibleSolutions(List<Integer> stockInventory) {
-        List<Order> possibleSols = new ArrayList<Order>();
+    private List<Stock> getPossibleSolutions(List<Integer> stockInventory) {
+        List<Stock> possibleSols = new ArrayList<Stock>();
+
+        int currentTotal = currentStock.getTotalItems();
+        System.out.println("Current Stock: " + currentStock.toString());
 
         // Create Order instances
+        switch (store.getMaxTypes()) {
+            case 2:
+                // Iterate through every possibility
+                for (int a = -store.getMaxReturns(); a < store.getMaxPurchase(); a++) {
+                    for (int b = -store.getMaxReturns(); b < store.getMaxPurchase(); b++) {
+                        // Check if its valid
+                        if ((a + b) <= store.getMaxPurchase()) {
+                            if (-(a + b) <= store.getMaxReturns()) {
+                                int sum = a + b;
+                                if ((sum + currentTotal) <= store.getCapacity()) {
+
+                                    // Its valid
+                                    List<Integer> items = new ArrayList<Integer>();
+                                    items.add(a);
+                                    items.add(b);
+
+                                    Stock s = currentStock.add(items);
+                                    System.out.println(s.toString());
+
+                                }
+                            }
+                        }
+                        // Have every combination of a and b 
+                    }
+                }
+                break;
+        }
+
 
         // Calculate the possibilities if the store buys items
         return possibleSols;
