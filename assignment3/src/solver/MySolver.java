@@ -32,7 +32,6 @@ public class MySolver implements OrderingAgent {
 
         // Example code that buys one of each item type.
         // TODO Replace this with your own code.
-        System.out.println("Length: " + probabilities.size());
 
         int totalItems = 0;
         for (int i : stockInventory) {

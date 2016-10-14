@@ -3,6 +3,7 @@ package solver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 import problem.Store;
 import problem.Matrix;
@@ -35,10 +36,13 @@ public class OnlineSolver implements OrderingAgent {
 
         // Create a new stock item
         currentStock = new Stock(stockInventory, spec.getPrices());
-        System.out.println("Current items: " + currentStock.getTotalItems());
         currentStock.calculateProfit(probabilities);
 
-        getPossibleSolutions(stockInventory);
+        List<Stock> possibilities = getPossibleSolutions(stockInventory);
+        Stock best = possibilities.get(0);
+
+        itemOrders = best.getItemOrders();
+        itemReturns = best.getItemReturns();
 
         // combine orders and returns to get change for each item type
         List<Integer> order = new ArrayList<Integer>(itemOrders.size());
@@ -53,7 +57,6 @@ public class OnlineSolver implements OrderingAgent {
         List<Stock> possibleSols = new ArrayList<Stock>();
 
         int currentTotal = currentStock.getTotalItems();
-        System.out.println("Current Stock: " + currentStock.toString());
 
         // Create Order instances
         switch (store.getMaxTypes()) {
@@ -69,15 +72,21 @@ public class OnlineSolver implements OrderingAgent {
                                 int sum = a + b;
                                 if ((sum + currentTotal) <= store.getCapacity()) {
 
-                                    // Its valid
-                                    List<Integer> items = new ArrayList<Integer>();
-                                    items.add(a);
-                                    items.add(b);
+                                    int currentA = currentStock.getInventory().get(0);
+                                    int currentB = currentStock.getInventory().get(1);
 
-                                    Stock s = currentStock.add(items);
-                                    s.calculateProfit(probabilities);
-                                    possibleSols.add(s);
-                                    System.out.println(s.toString());
+                                    // Check that the stock count is positive
+                                    if ((a + currentA) >= 0 && (b + currentB) >= 0) {
+
+                                        // Its valid
+                                        List<Integer> items = new ArrayList<Integer>();
+                                        items.add(a);
+                                        items.add(b);
+
+                                        Stock s = currentStock.add(items);
+                                        s.calculateProfit(probabilities);
+                                        possibleSols.add(s);
+                                    }
 
                                 }
                             }
@@ -87,6 +96,9 @@ public class OnlineSolver implements OrderingAgent {
                 break;
         }
 
+        // Sort the Stock to find the min
+        Collections.sort(possibleSols);
+        Collections.reverse(possibleSols);
 
         // Calculate the possibilities if the store buys items
         return possibleSols;
