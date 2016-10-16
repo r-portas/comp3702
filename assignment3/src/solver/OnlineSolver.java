@@ -53,6 +53,7 @@ public class OnlineSolver implements OrderingAgent {
         return order;
     }
 
+    //TODO: Convert this to a tree implementation so it can predict the future
     private List<Stock> getPossibleSolutions(List<Integer> stockInventory) {
         List<Stock> possibleSols = new ArrayList<Stock>();
 
