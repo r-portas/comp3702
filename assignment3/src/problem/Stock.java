@@ -62,6 +62,10 @@ public class Stock implements Comparable<Stock>{
         return profit;
     }
 
+    public List<Integer> getInventory() {
+        return inventory;
+    }
+
     public void setCost(double cost) {
         this.cost = cost;
     }
@@ -123,10 +127,6 @@ public class Stock implements Comparable<Stock>{
         if (verbose) {
             System.out.println("Profit: " + profit);
         }
-    }
-
-    public List<Integer> getInventory() {
-        return inventory;
     }
 
     /**

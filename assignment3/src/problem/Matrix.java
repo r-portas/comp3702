@@ -29,21 +29,4 @@ public class Matrix {
     public List<Double> getRow(int row) {
         return Collections.unmodifiableList(data.get(row));
     }
-
-    public String toString() {
-        String line = "";
-
-        for (ArrayList<Double> row : data) {
-            
-            for (Double item : row) {
-                line += String.valueOf(item);
-                line += " ";
-            }
-
-            line += "\n";
-        }
-
-        return line;
-    }
-
 }

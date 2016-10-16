@@ -21,7 +21,7 @@ public class OfflineSolver implements OrderingAgent {
     }
 
     public void doOfflineComputation() {
-        // TODO Write your own code here.
+        System.out.println("Prob size: " + probabilities.size());
     }
 
     public List<Integer> generateStockOrder(List<Integer> stockInventory,
@@ -32,7 +32,6 @@ public class OfflineSolver implements OrderingAgent {
 
         // Example code that buys one of each item type.
         // TODO Replace this with your own code.
-        System.out.println("Length: " + probabilities.size());
 
         int totalItems = 0;
         for (int i : stockInventory) {
