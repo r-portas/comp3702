@@ -7,7 +7,7 @@ public class Store {
 	/** Max number of items the store can stock. */
 	private int capacity;
 	/** Max number of items the store can order in a week. */
-    private int maxOrder;
+        private int maxOrder;
 	/** Max number of items the store can return in a week. */
 	private int maxReturns;
 	/** Max number of item types a user might need in a week */

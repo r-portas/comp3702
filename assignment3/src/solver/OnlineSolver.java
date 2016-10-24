@@ -47,9 +47,6 @@ public class OnlineSolver implements OrderingAgent {
         itemOrders = best.getItemOrders();
         itemReturns = best.getItemReturns();
 
-        System.out.println("ITEM ORDERS LENGTH: " + itemOrders.size());
-        System.out.println("ITEM RETURNS LENGTH: " + itemReturns.size());
-
         // combine orders and returns to get change for each item type
         List<Integer> order = new ArrayList<Integer>(itemOrders.size());
         for(int i = 0; i < store.getMaxTypes(); i++) {

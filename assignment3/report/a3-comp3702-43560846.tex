@@ -76,15 +76,6 @@
 
     In this table, the rows represent the current state and the columns represent the next state.
 
-    \subsubsection{Implementation Note}
-
-    Create a array of tuples of possible solutions, then run each possibility through the transition function to find the average number of items bought. 
-    Add checking to ensure customers can't buy more items than the stores contains.
-
-    Create a class that represents this matrix, ensure that the states are continous, i.e. not discrete (to factor in for returns?). 
-    
-    Create function to get the bounds of the matrix.
-
     \subsection{Reward Function}
 
     The reward function will be the net profit made by the store after performing an action. As with the transition function, the reward for one item type is independant to the reward of other item types.
@@ -122,24 +113,19 @@
 
     \section{Algorithm Description}
 
-    \subsection{General Explanation}
-    \begin{enumerate}
-        \item Generate every possible action the customer can take and put it into an array, calculating the cost of any returns done
-        \item Run each array through the value function (transition function?) to calculate the profit for the action
-        \item Depending on if online or offline, continue building the tree
-    \end{enumerate}
+    \subsection{Offline Implementation}
+        \begin{enumerate}
+            \item Generate every possible action the customer can take and put it into an array, calculating the cost of any returns done
+            \item Run each array through the value function (transition function?) to calculate the profit for the action
+            \item Depending on if online or offline, continue building the tree
+        \end{enumerate}
 
-    \begin{itemize}
-        \item Policy, we are using the Monte Carlo tree to create the policy?
-        \item Monte Carlo Tree, edges will be actions and nodes will be profit value
-        \item Choose the best node and set that as the root
-    \end{itemize}
+        \begin{itemize}
+            \item Monte Carlo Tree, edges will be actions and nodes will be profit value
+            \item Choose the best node and set that as the root
+        \end{itemize}
 
-    \subsection{Online Method}
 
-    Look one step into the Monte Carlo Tree and choose the best result.
-
-    \subsection{Offline Method}
-
+    \subsection{Online Implementation}
 
 \end{document}

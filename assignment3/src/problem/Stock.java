@@ -9,6 +9,15 @@ import java.lang.Comparable;
  */
 public class Stock implements Comparable<Stock>{
 
+    /** The depth of the node in the Monte Carlo tree **/
+    private int depth;
+
+    /** The parent stock item, used for the tree search **/
+    private Stock parent;
+
+    /** The child items **/
+    private List<Stock> children;
+
     /** The inventory for the order */
     private List<Integer> inventory;
 
@@ -33,9 +42,35 @@ public class Stock implements Comparable<Stock>{
         this.inventory = new ArrayList<Integer>(current);
         this.prices = prices;
         this.cost = 0;
+
+        this.children = new ArrayList<Stock>();
         
         itemOrders = new ArrayList<Integer>();
         itemReturns = new ArrayList<Integer>();
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public Stock getParent() {
+        return parent;
+    }
+
+    public void setParent(Stock parent) {
+        this.parent = parent;
+    }
+
+    public void addChild(Stock child) {
+        children.add(child);
+    }
+
+    public List<Stock> getChildren() {
+        return children;
     }
 
     public List<Integer> getItemOrders() {

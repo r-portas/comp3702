@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import problem.Store;
+import problem.Stock;
+import problem.ProbabilityGenerator;
 import problem.Matrix;
 import problem.ProblemSpec;
+import problem.MonteCarlo;
 
 public class OfflineSolver implements OrderingAgent {
 
     private ProblemSpec spec = new ProblemSpec();
     private Store store;
     private List<Matrix> probabilities;
+    private MonteCarlo monteCarlo;
 
     public OfflineSolver(ProblemSpec spec) throws IOException {
         this.spec = spec;
@@ -21,7 +25,21 @@ public class OfflineSolver implements OrderingAgent {
     }
 
     public void doOfflineComputation() {
-        System.out.println("Prob size: " + probabilities.size());
+
+        Stock startingStock = new Stock(spec.getInitialStock(), spec.getPrices());
+
+        ProbabilityGenerator pg = new ProbabilityGenerator();
+
+        monteCarlo = new MonteCarlo(
+                startingStock,
+                store,
+                pg,
+                probabilities,
+                spec.getNumWeeks()
+            );
+
+        monteCarlo.run();
+
     }
 
     public List<Integer> generateStockOrder(List<Integer> stockInventory,
