@@ -123,9 +123,19 @@
         \begin{itemize}
             \item Monte Carlo Tree, edges will be actions and nodes will be profit value
             \item Choose the best node and set that as the root
+            \item Monte Carlo Tree seems to converge to a point?
         \end{itemize}
 
 
     \subsection{Online Implementation}
+
+    The online method will involve getting the current store stock at a given week and calculating the best outcome based on the given probabilities. It will do this by using the value function to calculate the profit for every possible outcome.
+
+    \begin{enumerate}
+        \item Get the current stock of the store
+        \item Using the current stock, find every possible combination of returning and buying items
+        \item Apply the value function to every combination
+        \item Select the state with the highest profit
+    \end{enumerate}
 
 \end{document}

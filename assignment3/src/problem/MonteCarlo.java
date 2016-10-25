@@ -3,6 +3,7 @@ package problem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
+import java.util.Stack;
 
 /**
  * Models a Monte Carlo search tree
@@ -42,12 +43,16 @@ public class MonteCarlo {
     /** The max depth of the tree **/
     private int maxDepth;
 
+    /** Stores a stack containing the stocks **/
+    private Stack<Stock> stackItems;
+
     public MonteCarlo(Stock start, Store store, ProbabilityGenerator pg, List<Matrix> probabilities, int maxDepth) {
 
         this.store = store;
         this.pg = pg;
         this.probabilities = probabilities;
         this.currentDepth = 1;
+        stackItems = new Stack<Stock>();
 
         start.setParent(null);
         start.setDepth(currentDepth);
@@ -77,12 +82,14 @@ public class MonteCarlo {
     /**
      * Runs the tree generation
      */
-    public void run() {
+    public Stock run() {
 
         startTime = System.currentTimeMillis();
 
         while (currentDepth < maxDepth) {
-            addTreeLevel(); 
+            currentLevel = addTreeLevel(); 
+
+            currentDepth++;
 
             // Sort the collection
             Collections.sort(currentLevel);
@@ -95,16 +102,38 @@ public class MonteCarlo {
 
         }
         
-        System.out.println(currentLevel.get(0));
 
         double seconds = (System.currentTimeMillis() - startTime / 1000.0);
         log("Search finished in " + seconds);
+
+        stackItems = new Stack<Stock>();
+
+        Stock ptr = currentLevel.get(0);
+        
+        // Stores the child pointer
+        Stock child = ptr;
+        while (ptr.getParent() != null) {
+            // Add the item to the stack
+            stackItems.push(ptr);
+            child = ptr;
+            ptr = ptr.getParent();
+        }
+        
+        return child;
+
+    }
+
+    /**
+     * Gets the next stock from the stack
+     */
+    public Stock getStockItem() {
+        return stackItems.pop();
     }
 
     /**
      * Adds a level to the tree
      */
-    private void addTreeLevel() {
+    private List<Stock> addTreeLevel() {
 
         log("starting generation of tree level " + currentDepth);
         
@@ -116,11 +145,9 @@ public class MonteCarlo {
             newLevel.addAll(addChildNodes(s));
         }
 
-        currentLevel = newLevel;
-
         log("finished generation of tree level " + currentDepth + ", level has " + newLevel.size() + " nodes");
 
-        currentDepth++;
+        return newLevel;
     }
 
     /**

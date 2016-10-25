@@ -17,28 +17,17 @@ public class OfflineSolver implements OrderingAgent {
     private Store store;
     private List<Matrix> probabilities;
     private MonteCarlo monteCarlo;
+    private ProbabilityGenerator pg;
 
     public OfflineSolver(ProblemSpec spec) throws IOException {
         this.spec = spec;
         store = spec.getStore();
         probabilities = spec.getProbabilities();
+        pg = new ProbabilityGenerator();
     }
 
     public void doOfflineComputation() {
 
-        Stock startingStock = new Stock(spec.getInitialStock(), spec.getPrices());
-
-        ProbabilityGenerator pg = new ProbabilityGenerator();
-
-        monteCarlo = new MonteCarlo(
-                startingStock,
-                store,
-                pg,
-                probabilities,
-                spec.getNumWeeks()
-            );
-
-        monteCarlo.run();
 
     }
 
@@ -48,9 +37,28 @@ public class OfflineSolver implements OrderingAgent {
         List<Integer> itemOrders = new ArrayList<Integer>();
         List<Integer> itemReturns = new ArrayList<Integer>();
 
-        // Example code that buys one of each item type.
-        // TODO Replace this with your own code.
+        Stock currentStock = new Stock(stockInventory, spec.getPrices());
 
+        currentStock.setItemOrders();
+        currentStock.setItemReturns();
+
+        currentStock.calculateProfit(probabilities);
+
+        // Do the monte carlo search tree
+        monteCarlo = new MonteCarlo(
+                currentStock,
+                store,
+                pg,
+                probabilities,
+                numWeeksLeft
+            );
+
+        Stock best = monteCarlo.run();
+
+        itemOrders = best.getItemOrders();
+        itemReturns = best.getItemReturns();
+
+        /*
         int totalItems = 0;
         for (int i : stockInventory) {
             totalItems += i;
@@ -68,6 +76,7 @@ public class OfflineSolver implements OrderingAgent {
             }
             itemReturns.add(0);
         }
+        */
 
 
         // combine orders and returns to get change for each item type
