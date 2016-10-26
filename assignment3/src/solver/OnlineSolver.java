@@ -45,6 +45,7 @@ public class OnlineSolver implements OrderingAgent {
         Stock best = possibilities.get(0);
 
         itemOrders = best.getItemOrders();
+        System.out.println("Ordered: " + itemOrders);
         itemReturns = best.getItemReturns();
 
         // combine orders and returns to get change for each item type

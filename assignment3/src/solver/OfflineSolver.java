@@ -39,9 +39,6 @@ public class OfflineSolver implements OrderingAgent {
 
         Stock currentStock = new Stock(stockInventory, spec.getPrices());
 
-        currentStock.setItemOrders();
-        currentStock.setItemReturns();
-
         currentStock.calculateProfit(probabilities);
 
         // Do the monte carlo search tree
@@ -53,7 +50,18 @@ public class OfflineSolver implements OrderingAgent {
                 numWeeksLeft
             );
 
-        Stock best = monteCarlo.run();
+        Stock best;
+
+        if (numWeeksLeft == 0) {
+            // Run the basic method
+            List<Stock> possibilities = pg.getPossibleSolutions(currentStock, store, probabilities);
+            best = possibilities.get(0);
+
+        } else {
+            // Do a monte carlo search
+            best = monteCarlo.run();
+        }
+        System.out.println(best);
 
         itemOrders = best.getItemOrders();
         itemReturns = best.getItemReturns();
