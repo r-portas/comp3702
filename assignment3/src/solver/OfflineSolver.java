@@ -65,26 +65,14 @@ public class OfflineSolver implements OrderingAgent {
         itemOrders = best.getItemOrders();
         itemReturns = best.getItemReturns();
 
+        if (itemOrders.size() == 0) {
+            
+            List<Stock> possibilities = pg.getPossibleSolutions(currentStock, store, probabilities);
+            best = possibilities.get(0);
 
-        /*
-        int totalItems = 0;
-        for (int i : stockInventory) {
-            totalItems += i;
+            itemOrders = best.getItemOrders();
+            itemReturns = best.getItemReturns();
         }
-
-        int totalOrder = 0;
-        for (int i = 0; i < store.getMaxTypes(); i++) {
-            if (totalItems >= store.getCapacity() ||
-                    totalOrder >= store.getMaxPurchase()) {
-                itemOrders.add(0);
-            } else {
-                itemOrders.add(1);
-                totalOrder ++;
-                totalItems ++;
-            }
-            itemReturns.add(0);
-        }
-        */
 
 
         // combine orders and returns to get change for each item type
@@ -94,11 +82,6 @@ public class OfflineSolver implements OrderingAgent {
         }
 
         System.out.println("Order size: " + order.size());
-
-        if (order.size() == 0) {
-            order.add(0);
-            order.add(0);
-        }
 
         return order;
     }

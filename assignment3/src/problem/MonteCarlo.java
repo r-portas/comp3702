@@ -17,7 +17,7 @@ public class MonteCarlo {
     private long startTime;
 
     /** The max number of items that can be in a single level of the tree **/
-    private int maxItems = 50000;
+    private int maxItems = 30000;
 
     /** The starting node of the tree **/
     private Stock start;
@@ -109,17 +109,18 @@ public class MonteCarlo {
         stackItems = new Stack<Stock>();
 
         Stock ptr = currentLevel.get(0);
+
+        if (ptr == start) {
+            return ptr;
+        }
         
-        // Stores the child pointer
-        Stock child = ptr;
-        while (ptr.getParent() != null) {
+        while (ptr.getParent() != start) {
             // Add the item to the stack
             stackItems.push(ptr);
-            child = ptr;
             ptr = ptr.getParent();
         }
         
-        return child;
+        return ptr;
 
     }
 
