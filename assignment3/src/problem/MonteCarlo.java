@@ -67,6 +67,12 @@ public class MonteCarlo {
 
         this.maxDepth = maxDepth;
 
+        if (maxDepth != 0) {
+            this.maxItems = 100000 / maxDepth;
+        } else {
+            this.maxItems = 100000;
+        }
+
         log("max depth is " + maxDepth);
     }
 
