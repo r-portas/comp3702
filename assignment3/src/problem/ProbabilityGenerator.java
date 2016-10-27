@@ -7,7 +7,7 @@ import java.util.Collections;
 public class ProbabilityGenerator {
 
     /** Enables debugging **/
-    private boolean DEBUGGING = true;
+    private boolean DEBUGGING = false;
 
     private void log(String s) {
         if (DEBUGGING) {
@@ -43,7 +43,8 @@ public class ProbabilityGenerator {
                 break;
 
                 // Mega stores
-            case 6:
+            case 7:
+                possibleSols = sevenMaxTypes(currentStock, store, probabilities);
 
         }
 
@@ -223,7 +224,6 @@ public class ProbabilityGenerator {
         }
 
         private List<Stock> fiveMaxTypes(Stock currentStock, Store store, List<Matrix> probabilities) {
-            log("In stock: " + currentStock);
             List<Stock> possibleSols = new ArrayList<Stock>();
             int currentTotal = currentStock.getTotalItems();
 
@@ -279,4 +279,69 @@ public class ProbabilityGenerator {
 
             return possibleSols;
         }
+
+    private List<Stock> sevenMaxTypes(Stock currentStock, Store store, List<Matrix> probabilities) {
+        List<Stock> possibleSols = new ArrayList<Stock>();
+        int currentTotal = currentStock.getTotalItems();
+
+        // Iterate through every possibility
+        for (int a = -store.getMaxReturns(); a < store.getMaxPurchase(); a++) {
+            for (int b = -store.getMaxReturns(); b < store.getMaxPurchase(); b++) {
+                for (int c = -store.getMaxReturns(); c < store.getMaxPurchase(); c++) {
+                    for (int d = -store.getMaxReturns(); d < store.getMaxPurchase(); d++) {
+                        for (int e = -store.getMaxReturns(); e < store.getMaxPurchase(); e++) {
+                            for (int f = -store.getMaxReturns(); f < store.getMaxPurchase(); f++) {
+                                for (int g = -store.getMaxReturns(); g < store.getMaxPurchase(); g++) {
+                                    List<Integer> numbers = new ArrayList<Integer>();
+                                    numbers.add(a);
+                                    numbers.add(b);
+                                    numbers.add(c);
+                                    numbers.add(d);
+                                    numbers.add(e);
+                                    numbers.add(f);
+                                    numbers.add(g);
+
+                                    List<Integer> positives = getPositiveNumbers(numbers);
+                                    List<Integer> negatives = getNegativeNumbers(numbers);
+
+                                    int sumPositives = getSum(positives);
+                                    int sumNegatives = getSum(negatives);
+
+                                    // Check if its valid
+                                    if (sumPositives <= store.getMaxPurchase()) {
+                                        if (-sumNegatives <= store.getMaxReturns()) {
+                                            int sum = getSum(numbers);
+                                            if ((sum + currentTotal) <= store.getCapacity()) {
+
+                                                // Check that the stock count is greater than 0
+                                                if (checkValid(numbers, currentStock.getInventory(), store.getCapacity())) {
+
+                                                    // Its valid
+                                                    List<Integer> items = new ArrayList<Integer>();
+                                                    items.add(a);
+                                                    items.add(b);
+                                                    items.add(c);
+                                                    items.add(d);
+                                                    items.add(e);
+                                                    items.add(f);
+                                                    items.add(g);
+
+                                                    Stock s = currentStock.add(items);
+                                                    s.calculateProfit(probabilities);
+                                                    possibleSols.add(s);
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return possibleSols;
     }
+}

@@ -25,6 +25,8 @@ public class Runner {
 	/** Whether to re-create the solver for every simulation. */
 	public static boolean RECREATE_SOLVER = true;
 
+        static long startTime;
+
 	public static void main(String[] args) throws Exception {
 		parseCommandLine(args);
 		Class<?> clazz = Class.forName(solverName);
@@ -40,6 +42,9 @@ public class Runner {
 			solver = (OrderingAgent)ctor.newInstance(spec);
 			solver.doOfflineComputation();
 		}
+
+                startTime = System.currentTimeMillis();
+
 		for (int simNo = 0; simNo < numSimulations; simNo++) {
 	        
 			System.out.printf("Run #%d\n", simNo+1);
@@ -61,6 +66,7 @@ public class Runner {
 		
 		simulator.saveOutput(outputPath);
 		System.out.printf("Summary statistics from %d runs:\n", numSimulations);
+                System.out.printf("Elapsed time: %d\n", System.currentTimeMillis() - startTime);
 		System.out.println();
 		System.out.printf("Overall profit: %f\n", totalProfit);
 	}

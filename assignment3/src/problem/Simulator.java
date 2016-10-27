@@ -22,6 +22,8 @@ public class Simulator {
 	private Store store;
 	private List<Matrix> probabilities;
 	private boolean verbose = true;
+
+        long startTime;
 	
 	/** 
 	 * True if you want the store to start off being full, with random

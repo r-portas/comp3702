@@ -61,10 +61,10 @@ public class OfflineSolver implements OrderingAgent {
             // Do a monte carlo search
             best = monteCarlo.run();
         }
-        System.out.println(best);
 
         itemOrders = best.getItemOrders();
         itemReturns = best.getItemReturns();
+
 
         /*
         int totalItems = 0;
@@ -91,6 +91,13 @@ public class OfflineSolver implements OrderingAgent {
         List<Integer> order = new ArrayList<Integer>(itemOrders.size());
         for(int i = 0; i < itemOrders.size(); i++) {
             order.add(itemOrders.get(i) - itemReturns.get(i));
+        }
+
+        System.out.println("Order size: " + order.size());
+
+        if (order.size() == 0) {
+            order.add(0);
+            order.add(0);
         }
 
         return order;
