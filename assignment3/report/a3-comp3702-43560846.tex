@@ -16,7 +16,7 @@
 \begin{document}
     \maketitle
 
-    \section{Problem Definition}
+    \section{Question 1: Problem Definition}
 
     \subsection{State Space}
     The state space will be a set of tuples of integers from 0 to the maximum number of items the shop can stock. The size of the tuple is the number of items a shop can stock. 
@@ -105,27 +105,22 @@
             # Calculate the expected number of items sold
             prob = action * transition
 
-            # Calculate the net value of the transactions
-            value = prob * item_prices
+            # Calculate the net profit of the transactions
+            profit = prob * item_prices
     \end{verbatim}
 
     Where action is the tuple containing the the number of items.
 
-    \section{Algorithm Description}
+    \section{Question 2: Algorithm Description}
 
     \subsection{Offline Implementation}
         \begin{enumerate}
             \item Generate every possible action the customer can take and put it into an array, calculating the cost of any returns done
-            \item Run each array through the value function (transition function?) to calculate the profit for the action
-            \item Depending on if online or offline, continue building the tree
+            \item Run each array through the value function to calculate the profit for the action
+            \item For each result in the result list, repeat step 1 with the new result as the new root node
+            \item Break the loop when the number of weeks is reached
+            \item Find the highest profit node and backtrack up the tree to find the order to make
         \end{enumerate}
-
-        \begin{itemize}
-            \item Monte Carlo Tree, edges will be actions and nodes will be profit value
-            \item Choose the best node and set that as the root
-            \item Monte Carlo Tree seems to converge to a point?
-        \end{itemize}
-
 
     \subsection{Online Implementation}
 
@@ -137,5 +132,23 @@
         \item Apply the value function to every combination
         \item Select the state with the highest profit
     \end{enumerate}
+
+    \section{Question 3: Algorithm Analysis}
+
+    The two algorithms to compare are the Monte Carlo search tree, which was used for the offline implementation, and the base value iteration method, which was used for the online implementation.
+
+    The two algorithms can be compared based on running time and profit generated, these are shown in the tables below.
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c| }
+            \hline
+            Run & Running time & Profit \\
+            \hline
+            1 & 8ms & \$1349.56\\
+            \hline
+        \end{tabular}
+
+        \caption{Small Store, Base Value Interation Method}
+    \end{center}
 
 \end{document}
