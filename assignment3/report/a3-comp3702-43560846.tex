@@ -140,9 +140,10 @@
 
     The two algorithms can be compared based on running time and profit generated, these are shown in the tables below.
 
-    \begin{table}
-        \centering
+    \begin{center}
         \begin{tabular}{ |c|c|c| }
+            \hline
+            \multicolumn{3}{|c|}{Base Value Interation, Small Store} \\
             \hline
             Run & Running time & Profit \\
             \hline
@@ -150,16 +151,16 @@
             2 & 9ms & \$1322.18\\
             3 & 10ms & \$1311.05\\
             4 & 9ms & \$1531.78\\
+            \hline
             avg & 9ms & \$1378.64\\
             \hline
         \end{tabular}
+    \end{center}
 
-        \caption{Small Store, Base Value Interation Method}
-    \end{table}
-
-    \begin{table}
-        \centering
+    \begin{center}
         \begin{tabular}{ |c|c|c| }
+            \hline
+            \multicolumn{3}{|c|}{Monte Carlo Search Tree, Small Store} \\
             \hline
             Run & Running time & Profit \\
             \hline
@@ -167,11 +168,18 @@
             2 & 20748ms & \$521.06\\
             3 & 21802ms & \$1146.53\\
             4 & 21458ms & \$1267.68\\
-            avg & 21179.75ms & \$938.315\
+            \hline
+            avg & 21179.75ms & \$938.315\\
             \hline
         \end{tabular}
+    \end{center}
 
-        \caption{Small Store, Monte Carlo Search Tree Method}
-    \end{table}
+    As shown in the tables, the base value interation method is both faster and yields more profits, thus this is the method used in the code. 
+
+    This is due to the estimates made by the algorithm, the base value interation method has a more accurate estimate, as it is only predicting a single step ahead, whereas the Monte Carlo Search Tree is attempting to look ahead until the total number of weeks are reached, thus it's estimate become inaccurate the more into the future it guesses.
+
+    Additionally the base value iteration method scales better with larger inputs. This is because larger input have larger possible combinations, thus the Monte Carlo Search Tree will have many more nodes at each level, which will drastically increase the running time of the application.
+
+    However the base value iteration method only looks one step ahead at most, thus will be affected by larger inputs far less.
 
 \end{document}
