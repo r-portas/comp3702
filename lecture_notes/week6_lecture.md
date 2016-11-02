@@ -75,7 +75,7 @@
 - Start from a state node (OR level)
     - Fringe nodes are state nodes
 - Use any search algorithms we have studied
-    - Select a fring node to expand
+    - Select a fringe node to expand
     - Select an action to use
     - Insert the corresponding action node
     - Insert all possible outcome of the action, as the child of the action node
@@ -112,4 +112,11 @@
 ### Example: Tic Tac Toe
 - e(s) = (number of rows, columns and diagonals where MAX can win) - (number of rows, columns and diagonals where MIN can win)
 - Agent (MAX): cross
-- 
+
+### Tic Tac Toe Algorithm
+1. Expand the game tree from the current state (where it is MAX's turn to play) to depth h
+2. Compute the evaluation function at every leaf of the tree
+3. Back up the values from the leaves to the root of the tree as follows:
+    a. A MAX node gets the maximum of the evaluation of its successors
+    b. A MIN node get the minimum of the evaluation of its successors
+4. Select the move toward a MIN node that has the largest backed up value
