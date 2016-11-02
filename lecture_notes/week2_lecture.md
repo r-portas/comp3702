@@ -24,7 +24,7 @@
 - Optimality - Return the minimum path cost if one exists
 - Complexity - Time and Space complexity
 
-## Uninformed Search (Blind Search)
+## Uninformed Search (Blind Search, No Heuristics)
 - Does not estimate the cost from the current node to the goal
 - Methods:
   - Breadth First Search (BFS)
@@ -71,7 +71,7 @@
 - It is optimal in terms of cost if all edges have a positive cost
 - The time and space complexity is O(b^(1 + floor(c\*/e))) where c* is the cost of the optimal solution and e is the minimum cost of the step
 
-## Informed Search
+## Informed Search (Uses Heuristics)
 Informed Search: Select which node to expand based on a function of the estimated cost from the current node to the goal state
 
 Cost: f(n) = g(n) + h(n), where g(n) is the cost from root to node n and h(n) is the estimated cost from n to goal (usually based on heuristics)
