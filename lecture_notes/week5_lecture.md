@@ -16,6 +16,15 @@
 - Predicate / first order logic
 - High order logic
 
+### Logical Equivalences
+```
+(A -> B) = (~B -> ~A)
+(A -> B) = (~A v B)
+(A <-> B) = (A -> B) ^ (B -> A)
+~(A ^ B) = (~A v ~B)
+~(A v B) = (~A ^ ~B)
+```
+
 ### Propositional Logic
 - Atomic Sequence
   - An expression which is either true or false
