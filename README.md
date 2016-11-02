@@ -2,7 +2,7 @@
 
 ## Past Exams:
 - [2015 Final Exam](past_exams/2015_sem2.md)
-- [2014 Final Exma](past_exams/2014_sem2.md)
+- [2014 Final Exam](past_exams/2014_sem2.md)
 
 ## Index:
 
