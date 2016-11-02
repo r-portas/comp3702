@@ -32,11 +32,13 @@ Belief update function generates a belief vector, the sum of the belief vector d
 We use the transition function to sample where we can get to.
 
 b(s):
+
 | (T, L) | (L, T) |
 | ------ | ------ |
 | 0.5    | 0.5    |
 
 After step (Intuition):
+
 | (T, L) | (L, T) |
 | ------ | ------ |
 | 0.85   | 0.15   |

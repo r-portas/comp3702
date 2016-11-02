@@ -2,6 +2,7 @@
 
 ## Index:
 
+- [Course Review](lecture_notes/revision_lecture.md)
 - [Search Algorithms](lecture_notes/week2_lecture.md)
 - [Informed Search and Search in Continuous Space](lecture_notes/week3_lecture.md)
 - [Search in Continuous Space](lecture_notes/week4_lecture.md)
