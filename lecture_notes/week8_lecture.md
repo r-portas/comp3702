@@ -105,6 +105,11 @@ Loop:
     Until V^(t+1)(s) = V^t(s) for all s
 ```
 
+## Using Value Iteration
+
+1. Write down the current values (e.g. The reward for each tile)
+2. Calculate each possible state and find the expected result
+
 ## Problem: Large state space
 - So far, we assume we can store the values of all states and update the value of each state sufficiently often
 - Infeasible in large state space, especially continous state space
