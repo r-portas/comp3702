@@ -1,5 +1,9 @@
 # COMP3702 Notes, Semester 2 2016
 
+## Past Exams:
+- [2015 Final Exam](past_exams/2015_sem2.md)
+- [2014 Final Exma](past_exams/2014_sem2.md)
+
 ## Index:
 
 - [Course Review](lecture_notes/revision_lecture.md)
