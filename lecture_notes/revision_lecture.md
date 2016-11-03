@@ -185,7 +185,7 @@ successor(v), a function that:
     - Online: RTDP and MCTS
 
 ## Value Iteration
-![Value Iteration](resources/value_iteration.PNG)
+![Value Iteration](resources/value_iteration.png)
 
 ## Policy Iteration
 - Policy iteration starts with a policy and iteratively improves it. 
