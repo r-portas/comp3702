@@ -184,6 +184,14 @@ successor(v), a function that:
     - Offline: Value iteration and Policy iteration
     - Online: RTDP and MCTS
 
+## Value Iteration
+![Value Iteration](resources/value_iteration.PNG)
+
+## Policy Iteration
+- Policy iteration starts with a policy and iteratively improves it. 
+- Start with an approximation to the optimal policy.
+- Policy iteration is useful for systems which are too big to be represented directly with MDPs
+
 ## Partially Observable Markov Decision Processes (POMDPs)
 - Main Components:
     - State space (S) - not known
