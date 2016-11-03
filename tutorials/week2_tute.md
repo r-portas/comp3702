@@ -1,4 +1,4 @@
-# Week 2 Tute
+# Week 2 Tutorial
 
 ## What makes an AI?
 - Act like a human

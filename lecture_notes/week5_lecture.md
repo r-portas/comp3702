@@ -145,6 +145,13 @@ _Notes_: Natural deduction is sound but may not be complete, depends on wwhether
     - Which assignment is being followed first
     - A lot of methods have been proposed
 
+## DPLL Tree
+
+1. Create a tree where the CNF form is the root
+2. The tree edges are possible values, for example B = True, B = False
+3. The child nodes are the parent node's CNF equation with the value subsituted in
+4. Keep on making child nodes until you reach a single result, either True or False
+
 ## GSAT
 - GSAT(Sentence S)
     - Loop n times
