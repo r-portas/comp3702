@@ -7,7 +7,7 @@
 
 ## What is AI
 - An attempt to build "intelligent" computers
-- What is "inteligent"
+- What is "intelligent"
     - Act like humans
     - Think like humans
     - Act rationally
