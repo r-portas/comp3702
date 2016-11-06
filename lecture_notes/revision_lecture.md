@@ -237,7 +237,7 @@ worth = current worth + discount factor * (expected total future reward)
     - R: Reward Function
 - Need to try and explore the environment
 
-## Solving
+## Reinforcement Learning - Solving
 Solving a reinforcement learning problem means computing the best action to preform (recall the MDP definition of best action), even thought the transition and reward function are not known prior.
 
 - Model Based
@@ -247,4 +247,3 @@ Solving a reinforcement learning problem means computing the best action to pref
     - Monte Carlo
     - Temporal Difference (TD)
     - Q-Learning, SARVA
-    - TD
