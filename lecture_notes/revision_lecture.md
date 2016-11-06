@@ -185,7 +185,15 @@ successor(v), a function that:
     - Online: RTDP and MCTS
 
 ## Value Iteration
-![Value Iteration](resources/value_iteration.png)
+- Uses the Bellman Equation to calculate the worth of every state
+- Bellman equation:
+```
+worth = current worth + discount factor * (expected total future reward)
+```
+
+- Expected total future reward: 
+    - The sum of all possible outcomes from the transition function
+    - e.g. `0.7 * -1 + 0.2 * 3 + 0.1 * -10`
 
 ## Policy Iteration
 - Policy iteration starts with a policy and iteratively improves it. 
