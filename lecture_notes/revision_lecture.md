@@ -82,10 +82,16 @@ successor(v), a function that:
 
 - Blind Search
     - Do not use any additional information to "guess" cost of moving from current node to goal
-    - Example: DFS, BFS, Iterative Deepening DFS, Uniform Cost Search
+    - Types:
+        - DFS: Uses a stack
+        - BFS: Uses a queue
+        - Iterative Deepening DFS: Combines both DFS and BFS
+        - Uniform Cost Search: Uses a priority queue
 - Informed Search
     - Use additional information to "guess" cost of moving from current node to goal and decide where to explore next using this information
-    - Example: Best First Search, A* Search
+    - Types:
+        - Best First Search: Uses _only_ the heuristic (no g(n))
+        - A* Search: Uses the heuristic _and_ g(n)
 
 ## Search in Continuous Space
 - Construct discrete state graph
@@ -182,7 +188,18 @@ successor(v), a function that:
 - Meaning: Finding an (close to) optimal policy
 - Methods:
     - Offline: Value iteration and Policy iteration
-    - Online: RTDP and MCTS
+        - __Value Iteration__:
+            - Try all possible state and action pairs from the transition function
+        - __Policy Iteration__:
+            - Works with larger input sizes
+
+    - Online: 
+        - __RTDP__
+            - Policy iteration with with no termination condition
+        - __MCTS__
+            - Combines tree search and Monte Carlo
+            - Can be used to approximate the expected total future reward if the agent follows an optimal policy
+            - Build a search tree based on the outcomes of simulated plays
 
 ## Value Iteration
 - Uses the Bellman Equation to calculate the worth of every state
@@ -225,9 +242,21 @@ worth = current worth + discount factor * (expected total future reward)
     - Learn by doing
 
 ## Representations of Supervised and Unsupervised Learning
-- Decision Tree
-- Neural Network
-- Bayesian Network
+- __Decision Tree__
+    - Simplest method
+    - Given the new attribute, use the decision tree to predict what the outcome will be
+- __Neural Network__
+    - A network of artificial neurons
+    - A neuron is a funciton applied to a linear combination of the input attributes
+        - Called the activation function
+- __Bayesian (belief) Network__
+    - A compact representation of conditional dependency relation between random variables
+    - Consists of a graph and conditional probability tables
+    - The graph:
+        - Set of nodes that represents a set of random varaibles. Each variable has a finite set of values
+        - Set of directed edges that represent dependency relationship between the corresponding random variables
+    - A conditional probability table (CPT) represents conditional probability of a node given its parent
+
 
 ## Reinforcement Learning - Defined
 - Reinforcement learning is MDP where the transition and/or reward functions are not known
@@ -246,4 +275,38 @@ Solving a reinforcement learning problem means computing the best action to pref
 - Model Free
     - Monte Carlo
     - Temporal Difference (TD)
-    - Q-Learning, SARVA
+    - Q-Learning, SARSA
+
+### Monte Carlo
+- Goal: Given a policy, learn the value of the policy when T & R are unknown
+- Assumption: Episodic MDP
+    - Each episode is guaranteed to terminate within a finite amount of item
+- Loop over:
+    - Generate an episode
+    - Compute the total discounted reward for the episode
+    - Update the value
+
+- First Visit:
+    - Only update the value of a state if it is visited the first time in the sampled episode
+- Every Visit:
+    - Update the value of a state whenever it is visited (regardless at which timestep)
+- Converge to a true value by law of large number
+
+### Temporal Difference (TD) Learning
+- One of the most famous approaches
+- Idea: Iteratively reduce the difference between the value or Q-value estimates
+
+
+### Monte Carlo vs Temporal Difference Learning
+- Monte Carlo approach updates value after the episode is finished
+- Temporal difference updates value after each step
+
+## TD Learning Variants
+- __Q-Learning__
+    - Off policy: Update the Q-value based on the estimated best next actions, even though it's not the action performed
+        - The policy being followed is not the same as the policy being evaluated
+- __SARSA__
+    - Consider the actual action that the agent will take at the next step
+    - Data is `(s, a, r, s', 'a)`
+- __TD(lambda)__
+    - Weighted sum of the total reward over sequences of different length
